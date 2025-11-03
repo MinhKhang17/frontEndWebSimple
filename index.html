@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="index,follow" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>body{font-family:'Roboto',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;}</style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+<div id="site-header"></div>
+
+<main class="max-w-6xl mx-auto px-4 py-12 page-transition">
+  <section id="mainBanner" class="rounded-lg overflow-hidden relative shadow-lg mb-8">
+    <a id="bannerLink" href="product.html">
+      <img id="bannerImage" src="images/page/page1.jpg" 
+           alt="Banner" 
+           class="w-full h-[280px] sm:h-[340px] md:h-[420px] object-cover"
+           loading="eager"
+           fetchpriority="high"/>
+    </a>
+    <div class="absolute inset-0 bg-gradient-to-r from-black/60 sm:from-black/40 to-transparent flex items-center">
+      <div class="px-4 sm:ml-8 max-w-xl text-white">
+        <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-2">Chất Lượng Tạo Nên Sự Bền Vững</h1>
+        <p class="text-base sm:text-lg opacity-90 line-clamp-2 sm:line-clamp-none mb-4">Phụ kiện cao su chất lượng cao - Đồng hành cùng sự phát triển của ngành cao su Việt Nam</p>
+        <a href="product.html" 
+           class="inline-block bg-green-600 hover:bg-green-700 transition-colors px-4 py-2 rounded-lg text-white text-sm sm:text-base">
+          Xem sản phẩm
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white p-6 rounded-lg shadow mb-8">
+    <div class="grid md:grid-cols-3 gap-6 items-center">
+      <div class="md:col-span-2">
+        <h2 class="text-2xl font-semibold mb-2">Phong Hòa Phát — Vật tư ngành cao su</h2>
+        <p class="text-gray-600">Phong Hòa Phát chuyên sản xuất vật tư phục vụ khai thác mủ cao su: chén cao su, máng chắn mưa, dây buộc kiềng và phụ kiện ngành. Quy trình sản xuất hiện đại, tiêu chuẩn chất lượng và dịch vụ hậu mãi.</p>
+      </div>
+      <div class="text-center">
+        <a href="contact.html" class="inline-flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded">Gọi ngay: 0966 019 018</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h3 class="text-xl font-semibold mb-4">Sản phẩm tiêu biểu</h3>
+    <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      <article class="bg-white rounded-lg shadow overflow-hidden">
+        <a href="product.html#chen-01">
+          <div class="relative pb-[66%]"><img src="images/product/chenMu/chen1.png" alt="Chén cao su" class="absolute inset-0 w-full h-full object-cover"/></div>
+          <div class="p-4">
+            <h4 class="font-semibold">Chén cao su chịu nhiệt</h4>
+            <p class="text-sm text-gray-600 mt-2">Chén cao su chất lượng, chịu nhiệt, dùng hứng mủ hiệu quả.</p>
+          </div>
+        </a>
+      </article>
+
+      <article class="bg-white rounded-lg shadow overflow-hidden">
+        <a href="product.html#mang-01">
+          <div class="relative pb-[66%]"><img src="images/product/mangChanMua/mang-che-mua-cao-su (4).jpg" alt="Máng chắn mưa" class="absolute inset-0 w-full h-full object-cover"/></div>
+          <div class="p-4">
+            <h4 class="font-semibold">Máng chắn mưa PVC</h4>
+            <p class="text-sm text-gray-600 mt-2">Máng nhẹ, bền, bảo vệ mủ trong mùa mưa.</p>
+          </div>
+        </a>
+      </article>
+    </div>
+  </section>
+
+  <section class="bg-white p-6 rounded-lg shadow text-center">
+    <h3 class="text-xl font-semibold mb-2">Bạn cần báo giá số lượng lớn?</h3>
+    <p class="text-gray-600 mb-4">Liên hệ để nhận bảng giá chi tiết và ưu đãi cho đại lý.</p>
+    <a href="contact.html" class="inline-block bg-blue-600 text-white px-6 py-2 rounded">Yêu cầu báo giá</a>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Initialize partials on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      loadPartial('#site-header', 'header.html');
+      loadPartial('#site-footer', 'footer.html');
+    });
+  </script>
+</body>
+</html>

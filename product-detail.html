@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="index,follow" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body{font-family:'Roboto',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;}
+    .page-transition {
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+    .page-transition.loaded {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+<div id="site-header"></div>
+<main class="max-w-6xl mx-auto px-4 py-8 page-transition">
+  <nav class="text-sm text-gray-600 mb-4">
+    <a href="index.html" class="hover:underline">Trang chủ</a> / 
+    <a href="product.html" class="hover:underline">Sản phẩm</a> / 
+    <span id="productTitle" class="font-semibold">Chi tiết sản phẩm</span>
+  </nav>
+
+  <div id="productDetail"></div>
+
+  <template id="productTemplate">
+    <div class="grid md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
+      <div class="bg-white rounded-lg shadow overflow-hidden">
+        <div class="aspect-w-4 aspect-h-3">
+          <img src="" alt="" class="w-full h-full object-cover" id="productImage" loading="eager">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </div>
+          <div class="p-4 sm:p-6 md:p-8">
+            <div class="flex flex-wrap items-center gap-2 sm:gap-3 mb-4">
+              <h1 class="text-2xl sm:text-3xl font-bold" id="productName"></h1>
+              <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Mới</span>
+            </div>
+          
+            <div class="flex items-center gap-2 text-sm text-gray-600 mb-4">
+              <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+              </svg>
+              <span>Chất lượng cao</span>
+            </div>
+          
+            <p class="text-gray-600 text-lg leading-relaxed mb-6" id="productDescription"></p>
+          
+            <div class="bg-gray-50 p-6 rounded-lg mb-6">
+              <h3 class="font-semibold text-lg mb-4 flex items-center gap-2">
+                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                Đặc điểm nổi bật
+              </h3>
+              <ul class="space-y-3" id="productFeatures">
+              </ul>
+            </div>
+          
+            <div class="flex gap-4">
+              <a href="contact.html" id="requestQuoteBtn" class="flex-1 bg-green-600 text-white px-6 py-3 rounded-lg font-medium text-center hover:bg-green-700 transition-colors flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+                Yêu cầu báo giá
+              </a>
+            </div>
+        </div>
+      </div>
+      <div class="space-y-6">
+          <div class="bg-white rounded-lg shadow-lg p-8">
+            <h2 class="text-xl font-semibold mb-6 flex items-center gap-2">
+              <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/>
+              </svg>
+              Thông số kỹ thuật
+            </h2>
+            <table class="w-full text-sm divide-y divide-gray-200">
+            <tbody id="productSpecs"></tbody>
+          </table>
+        </div>
+          <div class="bg-white rounded-lg shadow-lg p-8">
+            <h2 class="text-xl font-semibold mb-6 flex items-center gap-2">
+              <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              Hỗ trợ khách hàng
+            </h2>
+            <ul class="space-y-4">
+              <li class="flex items-start gap-3">
+                <svg class="w-6 h-6 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                </svg>
+                <div>
+                  <h3 class="font-medium mb-1">Bảo hành chính hãng</h3>
+                  <p class="text-sm text-gray-600">Cam kết bảo hành sản phẩm theo đúng chính sách của nhà sản xuất</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-6 h-6 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                <div>
+                  <h3 class="font-medium mb-1">Giao hàng toàn quốc</h3>
+                  <p class="text-sm text-gray-600">Vận chuyển nhanh chóng đến mọi tỉnh thành trên cả nước</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-6 h-6 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/>
+                </svg>
+                <div>
+                  <h3 class="font-medium mb-1">Hỗ trợ kỹ thuật</h3>
+                  <p class="text-sm text-gray-600">Đội ngũ kỹ thuật viên giàu kinh nghiệm, sẵn sàng hỗ trợ 24/7</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <!-- Quy trình sản xuất -->
+          <div id="productionProcess" class="bg-white rounded-lg shadow-lg p-8">
+            <h2 class="text-xl font-semibold mb-6 flex items-center gap-2">
+              <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18M3 17h18"/>
+              </svg>
+              Quy trình sản xuất
+            </h2>
+            <ol class="space-y-6 list-none">
+              <li class="flex items-start gap-4">
+                <div class="flex-shrink-0 mt-1">
+                  <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-semibold">1</div>
+                </div>
+                <div>
+                  <h3 class="font-medium">Chuẩn bị nguyên liệu</h3>
+                  <p class="text-sm text-gray-600">Lựa chọn cao su và vật tư đạt tiêu chuẩn, kiểm tra đầu vào theo quy định chất lượng.</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-4">
+                <div class="flex-shrink-0 mt-1">
+                  <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-semibold">2</div>
+                </div>
+                <div>
+                  <h3 class="font-medium">Gia công & tạo hình</h3>
+                  <p class="text-sm text-gray-600">Cắt, ép khuôn hoặc đúc theo mẫu, sử dụng thiết bị gia công chính xác để đảm bảo kích thước.</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-4">
+                <div class="flex-shrink-0 mt-1">
+                  <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-semibold">3</div>
+                </div>
+                <div>
+                  <h3 class="font-medium">Hoàn thiện & xử lý bề mặt</h3>
+                  <p class="text-sm text-gray-600">Xử lý bề mặt, cắt tỉa, kiểm tra bavia và hoàn thiện tạo độ bền và tính thẩm mỹ cho sản phẩm.</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-4">
+                <div class="flex-shrink-0 mt-1">
+                  <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-semibold">4</div>
+                </div>
+                <div>
+                  <h3 class="font-medium">Kiểm tra chất lượng</h3>
+                  <p class="text-sm text-gray-600">Thực hiện các phép kiểm tra cơ lý và ngoại quan, kiểm định kích thước và độ bền theo tiêu chuẩn.</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-4">
+                <div class="flex-shrink-0 mt-1">
+                  <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-semibold">5</div>
+                </div>
+                <div>
+                  <h3 class="font-medium">Đóng gói & giao hàng</h3>
+                  <p class="text-sm text-gray-600">Đóng gói theo đơn vị vận chuyển, gắn nhãn, và bàn giao cho đối tác vận chuyển để giao đến khách hàng.</p>
+                </div>
+              </li>
+            </ol>
+          </div>
+      </div>
+    </div>
+  </template>
+</main>
+
+<div id="site-footer"></div>
+<script src="js/main.js"></script>
+<script>
+const productData = {
+  chenMu: {
+    name: "Chén cao su hứng mủ",
+    description: "Chén cao su chất lượng cao, được thiết kế đặc biệt để hứng mủ cao su hiệu quả. Sản phẩm có độ bền cao, chịu nhiệt tốt và thân thiện với môi trường.",
+    image: "images/product/chenMu/chen1.png",
+    features: [
+      "Chất liệu cao su cao cấp",
+      "Khả năng chịu nhiệt tốt",
+      "Độ bền cao trong môi trường khắc nghiệt",
+      "Thiết kế tối ưu cho việc hứng mủ"
+    ],
+    specs: {
+      "Chất liệu": "Cao su tự nhiên",
+      "Kích thước": "D120 x R80 mm",
+      "Độ dày": "2.5mm",
+      "Màu sắc": "Đen",
+      "Tuổi thọ": "3-5 năm"
+    }
+  },
+  mangChanMua: {
+    name: "Máng chắn mưa cao su",
+    description: "Máng chắn mưa cao su được thiết kế chuyên biệt để bảo vệ mủ cao su khỏi nước mưa. Sản phẩm có độ bền cao và hiệu quả trong việc thu hoạch mủ.",
+    image: "images/product/mangChanMua/mang-che-mua-cao-su (4).jpg",
+    features: [
+      "Thiết kế chống thấm nước hiệu quả",
+      "Dễ dàng lắp đặt và tháo gỡ",
+      "Độ bền cao trong điều kiện thời tiết khắc nghiệt",
+      "Tối ưu cho thu hoạch mủ"
+    ],
+    specs: {
+      "Chất liệu": "Cao su tổng hợp",
+      "Kích thước": "L300 x W150 mm",
+      "Độ dày": "1.8mm",
+      "Màu sắc": "Xám đen",
+      "Tuổi thọ": "2-3 năm"
+    }
+  }
+};
+
+// Add page transition effect
+document.addEventListener('DOMContentLoaded', () => {
+  // Add loaded class after a short delay
+  setTimeout(() => {
+    document.querySelector('.page-transition').classList.add('loaded');
+  }, 100);
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const productId = urlParams.get('product');
+  const product = productData[productId];
+  
+  if (product) {
+    const template = document.getElementById('productTemplate');
+    const clone = template.content.cloneNode(true);
+    
+    // Fill in product details
+    clone.getElementById('productImage').src = product.image;
+    clone.getElementById('productImage').alt = product.name;
+    clone.getElementById('productName').textContent = product.name;
+    clone.getElementById('productDescription').textContent = product.description;
+    
+    // Fill features
+    const featuresList = clone.getElementById('productFeatures');
+    product.features.forEach(feature => {
+      const li = document.createElement('li');
+      li.className = 'flex items-center gap-2 text-gray-700';
+      li.innerHTML = `
+        <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+        </svg>
+        <span>${feature}</span>
+      `;
+      featuresList.appendChild(li);
+    });
+    
+    // Fill specs
+    const specsTable = clone.getElementById('productSpecs');
+    Object.entries(product.specs).forEach(([key, value]) => {
+      const row = document.createElement('tr');
+      row.className = 'hover:bg-gray-50';
+      row.innerHTML = `
+        <td class="py-3 font-medium">${key}</td>
+        <td class="py-3 text-gray-600">${value}</td>
+      `;
+      specsTable.appendChild(row);
+    });
+    
+    // Update request quote button href
+    const requestQuoteBtn = clone.getElementById('requestQuoteBtn');
+    requestQuoteBtn.href = `contact.html?product=${productId}`;
+    
+    document.getElementById('productDetail').appendChild(clone);
+    document.getElementById('productTitle').textContent = product.name;
+  } else {
+    // Redirect to products page if no product is selected
+    window.location.href = 'product.html';
+  }
+});
+</script>
+</body>
+</html>

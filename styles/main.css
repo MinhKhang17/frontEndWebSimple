@@ -1,0 +1,337 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f9fafb;
+    color: #1f2937;
+    font-family: Arial, sans-serif;
+}
+
+/* Header Styles */
+.header {
+    background-color: white;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 40;
+}
+
+/* Top Banner */
+.top-banner {
+    background-color: #4fd1c5;
+    color: white;
+}
+
+.container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.top-banner .container {
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-links a {
+    color: white;
+    text-decoration: none;
+}
+
+.social-links a:hover {
+    text-decoration: underline;
+}
+
+/* Main Navbar */
+.main-navbar {
+    background-color: white;
+    padding: 1rem 0;
+}
+
+.main-navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo-img {
+    width: 3.5rem;
+    height: 3.5rem;
+    object-fit: contain;
+}
+
+.logo-text {
+    display: none;
+}
+
+.company-name {
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.company-slogan {
+    color: #6b7280;
+    font-size: 0.75rem;
+}
+
+/* Search Box */
+.search-box {
+    flex: 1;
+    display: none;
+    justify-content: center;
+}
+
+.search-container {
+    width: 100%;
+    max-width: 32rem;
+    display: flex;
+    align-items: center;
+    background-color: #f3f4f6;
+    border-radius: 9999px;
+    padding: 0.5rem 1rem;
+}
+
+.search-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 0.875rem;
+}
+
+.search-button {
+    margin-left: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 9999px;
+    background-color: #e5e7eb;
+    border: none;
+    cursor: pointer;
+}
+
+/* Contact Info */
+.contact-info {
+    display: none;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.875rem;
+}
+
+.business-hours {
+    text-align: right;
+}
+
+.hours-label {
+    font-weight: 600;
+    font-size: 0.75rem;
+}
+
+.hours-value {
+    font-size: 0.75rem;
+}
+
+.phone-button {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #dc2626;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    text-decoration: none;
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.menu-button {
+    padding: 0.5rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+/* Navigation */
+.nav-section {
+    background-color: white;
+    border-top: 1px solid #e5e7eb;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.category-button {
+    background-color: #9333ea;
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: none;
+    cursor: pointer;
+    font-size: 0.875rem;
+}
+
+.main-nav {
+    display: none;
+    gap: 1.5rem;
+    margin-left: 1rem;
+}
+
+.main-nav a {
+    color: #1f2937;
+    text-decoration: none;
+    font-size: 0.875rem;
+}
+
+.main-nav a:hover {
+    color: #2563eb;
+}
+
+.nav-right {
+    display: none;
+    gap: 0.75rem;
+    align-items: center;
+    font-size: 0.875rem;
+}
+
+.nav-right a {
+    color: #1f2937;
+    text-decoration: none;
+}
+
+/* Responsive Design */
+@media (min-width: 640px) {
+    .main-nav {
+        display: flex;
+    }
+    
+    .nav-right {
+        display: flex;
+    }
+    
+    .phone-button {
+        display: inline-flex;
+    }
+}
+
+@media (min-width: 768px) {
+    .logo-text {
+        display: block;
+    }
+    
+    .contact-info {
+        display: flex;
+    }
+    
+    .menu-button {
+        display: none;
+    }
+}
+
+@media (min-width: 1024px) {
+    .search-box {
+        display: flex;
+    }
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0,0,0,0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 0.25rem;
+    max-width: 48rem;
+    width: 100%;
+    margin: 0 1rem;
+    overflow: hidden;
+}
+
+.modal-header {
+    padding: 1rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-title {
+    font-weight: 600;
+}
+
+.modal-close {
+    color: #4b5563;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 1rem;
+}
+
+.modal-image {
+    width: 100%;
+    height: 18rem;
+    object-fit: contain;
+    margin-bottom: 1rem;
+}
+
+.modal-description {
+    color: #4b5563;
+}
+
+.modal-footer {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.75rem;
+}
+
+.download-link {
+    font-size: 0.875rem;
+    text-decoration: underline;
+}
+
+.quote-button {
+    background-color: #2563eb;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    text-decoration: none;
+}

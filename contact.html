@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="index,follow" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>body{font-family:'Roboto',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;}</style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+<div id="site-header"></div>
+<main class="max-w-6xl mx-auto px-4 py-12 page-transition">
+  <header class="text-center mb-6">
+    <h1 class="text-2xl font-bold">Liên hệ</h1>
+    <p class="text-gray-600">Gửi yêu cầu báo giá hoặc liên hệ với chúng tôi.</p>
+  </header>
+
+  <div class="grid md:grid-cols-2 gap-6">
+    <div class="bg-white rounded shadow p-4 sm:p-6">
+      <h3 class="font-semibold mb-3">Form liên hệ</h3>
+      <form id="contactForm" class="space-y-4">
+        <div class="space-y-1">
+          <label for="c_name" class="text-sm text-gray-600">Họ và tên</label>
+          <input id="c_name" type="text" placeholder="Nguyễn Văn A" 
+                 class="w-full border rounded px-3 py-2.5 text-base focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required/>
+        </div>
+        <div class="space-y-1">
+          <label for="c_phone" class="text-sm text-gray-600">Số điện thoại</label>
+          <input id="c_phone" type="tel" placeholder="0966 019 018" 
+                 class="w-full border rounded px-3 py-2.5 text-base focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required/>
+        </div>
+        <div class="space-y-1">
+          <label for="c_email" class="text-sm text-gray-600">Email</label>
+          <input id="c_email" type="email" placeholder="email@domain.com" 
+                 class="w-full border rounded px-3 py-2.5 text-base focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+        </div>
+        <div class="space-y-1">
+          <label for="c_message" class="text-sm text-gray-600">Nội dung yêu cầu</label>
+          <textarea id="c_message" rows="5" placeholder="Mô tả nhu cầu/ sản phẩm cần báo giá..." 
+                    class="w-full border rounded px-3 py-2.5 text-base focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required></textarea>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <button type="submit" class="bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 transition-colors flex-1">
+            Gửi liên hệ
+          </button>
+          <button type="reset" class="px-6 py-2.5 border rounded-lg hover:bg-gray-50 transition-colors">
+            Xóa
+          </button>
+        </div>
+        <p class="text-xs text-gray-500">Ghi chú: form demo — cần cấu hình EmailJS hoặc backend để gửi mail.</p>
+      </form>
+    </div>
+
+    <div class="bg-white rounded shadow p-6">
+      <h3 class="font-semibold mb-3">Thông tin liên hệ</h3>
+      <p class="text-sm"><strong>Công ty:</strong> Phong Hòa Phát</p>
+      <p class="text-sm"><strong>Hotline:</strong> <a href="tel:0966019018" class="text-green-600">0966 019 018</a></p>
+      <p class="text-sm"><strong>Email:</strong> <a href="mailto:contact@phonghoaphat.vn" class="text-green-600">contact@phonghoaphat.vn</a></p>
+      <div class="mt-4 h-48 border rounded overflow-hidden">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18" class="w-full h-full" loading="lazy"></iframe>
+      </div>
+    </div>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script src="js/main.js"></script>
+</body>
+</html>
