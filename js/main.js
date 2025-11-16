@@ -1,17 +1,21 @@
-// js/main.js (replace your current file with this)
+// js/main.js - File JavaScript chung cho toàn bộ website
 
-// Robust partial loader
+// ========== ROBUST PARTIAL LOADER ==========
 async function loadPartial(selector, url) {
   const el = document.querySelector(selector);
   if (!el) return;
+  
   try {
     const res = await fetch(url, { cache: 'no-cache' });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     el.innerHTML = await res.text();
+    
+    // Khởi tạo header sau khi load xong
     if (selector === '#site-header') initializeHeader();
   } catch (err) {
     console.error('Failed to load', url, err);
-    // Fallback minimal header/footer so page remains usable
+    
+    // Fallback: hiển thị header/footer tối thiểu để trang vẫn dùng được
     if (selector === '#site-header') {
       el.innerHTML = `<header class="bg-white p-4 shadow"><div class="max-w-6xl mx-auto">Phong Hòa Phát</div></header>`;
       initializeHeader();
@@ -22,25 +26,28 @@ async function loadPartial(selector, url) {
   }
 }
 
-// Initialize header after injection
+// ========== INITIALIZE HEADER ==========
 function initializeHeader() {
-  /* --- Active link highlighting (desktop & mobile) --- */
+  
+  /* --- Làm nổi bật link trang hiện tại --- */
   const current = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-link, .nav-mobile-link').forEach(el => {
     try {
       const href = el.getAttribute('href');
       if (!href) return;
+      
       if (href === current || (current === 'product-detail.html' && href === 'product.html')) {
         el.classList.add('font-bold', 'text-teal-600');
       } else {
         el.classList.remove('font-bold', 'text-teal-600');
       }
-    } catch(e){}
+    } catch(e) {}
   });
 
-  /* --- Category dropdown (desktop) --- */
+  /* --- Dropdown menu danh mục (desktop) --- */
   const catToggle = document.getElementById('catToggle');
   const catMenu = document.getElementById('catMenu');
+  
   if (catToggle && catMenu) {
     catToggle.addEventListener('click', (ev) => {
       ev.stopPropagation();
@@ -49,6 +56,8 @@ function initializeHeader() {
       catToggle.setAttribute('aria-expanded', String(!shown));
       catMenu.setAttribute('aria-hidden', String(shown));
     });
+    
+    // Đóng khi click bên ngoài
     document.addEventListener('click', (e) => {
       if (!catMenu.contains(e.target) && !catToggle.contains(e.target)) {
         catMenu.classList.add('hidden');
@@ -58,7 +67,7 @@ function initializeHeader() {
     });
   }
 
-  /* --- Mobile off-canvas --- */
+  /* --- Mobile off-canvas menu --- */
   const menuBtn = document.getElementById('menuBtn');
   const mobileMenu = document.getElementById('mobileMenu');
   const mobileBackdrop = document.getElementById('mobileBackdrop');
@@ -82,7 +91,8 @@ function initializeHeader() {
     mobilePanel.classList.add('-translate-x-full');
     document.body.classList.remove('overflow-hidden');
     menuBtn?.setAttribute('aria-expanded', 'false');
-    // after animation, disable pointer events
+    
+    // Tắt pointer events sau khi animation kết thúc
     setTimeout(() => {
       if (mobileMenu) {
         mobileMenu.style.pointerEvents = 'none';
@@ -92,19 +102,19 @@ function initializeHeader() {
     menuBtn?.focus();
   }
 
-  // attach events
+  // Gắn sự kiện
   if (menuBtn) menuBtn.addEventListener('click', openMobile);
   if (mobileCloseBtn) mobileCloseBtn.addEventListener('click', closeMobile);
   if (mobileBackdrop) mobileBackdrop.addEventListener('click', closeMobile);
 
-  // close on ESC
+  // Đóng menu khi nhấn ESC
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && mobileMenu && mobileMenu.style.pointerEvents !== 'none') {
       closeMobile();
     }
   });
 
-  // ensure mobile nav links close the menu on click
+  // Đóng mobile menu khi click vào link
   mobileMenu && mobileMenu.querySelectorAll('a').forEach(a => {
     a.addEventListener('click', () => {
       closeMobile();
@@ -112,17 +122,26 @@ function initializeHeader() {
   });
 }
 
-/* --- Page load and navigation overlay + prefetch (kept lightweight) --- */
+// ========== PAGE LOAD & NAVIGATION OVERLAY ==========
 document.addEventListener('DOMContentLoaded', function() {
+  // Load header và footer
   loadPartial('#site-header', 'header.html');
   loadPartial('#site-footer', 'footer.html');
 
-  // simple overlay navigation UX
+  // Tạo overlay chuyển trang mượt mà
   let navOverlay = document.getElementById('navOverlay');
   if (!navOverlay) {
     navOverlay = document.createElement('div');
     navOverlay.id = 'navOverlay';
-    Object.assign(navOverlay.style, { position:'fixed', inset:'0', background:'#fff', pointerEvents:'none', opacity:'0', transition:'opacity 280ms ease', zIndex:'9998' });
+    Object.assign(navOverlay.style, {
+      position: 'fixed',
+      inset: '0',
+      background: '#fff',
+      pointerEvents: 'none',
+      opacity: '0',
+      transition: 'opacity 280ms ease',
+      zIndex: '9998'
+    });
     document.body.appendChild(navOverlay);
   }
 
@@ -131,37 +150,54 @@ document.addEventListener('DOMContentLoaded', function() {
     navigateWithOverlay._navigating = true;
     navOverlay.style.pointerEvents = 'auto';
     navOverlay.style.opacity = '1';
-    const main = document.querySelector('main'); if (main) main.classList.remove('loaded');
-    setTimeout(()=> window.location.href = href, 280);
+    const main = document.querySelector('main');
+    if (main) main.classList.remove('loaded');
+    setTimeout(() => window.location.href = href, 280);
   }
 
-  // intercept internal link clicks gracefully
+  // Chặn click vào link nội bộ để thêm hiệu ứng chuyển trang
   document.addEventListener('click', function(e) {
     if (e.defaultPrevented) return;
     const a = e.target.closest('a');
     if (!a) return;
     if (a.target === '_blank' || a.hasAttribute('download')) return;
+    
     let href;
-    try { href = new URL(a.href, window.location.href); } catch { return; }
+    try {
+      href = new URL(a.href, window.location.href);
+    } catch {
+      return;
+    }
+    
     if (href.origin !== window.location.origin) return;
     if (href.protocol === 'mailto:' || href.protocol === 'tel:') return;
     if (href.pathname === window.location.pathname && href.hash) return;
     if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || e.button !== 0) return;
     if (a.closest('button')) return;
+    
     e.preventDefault();
     navigateWithOverlay(a.href);
-  }, { passive: true });
+  }, { passive: false });
 
-  // light prefetch on hover/touch
+  // Prefetch trang khi hover/touch vào link (tăng tốc độ load)
   const prefetched = new Set();
+  
   function prefetch(href) {
     try {
       const url = new URL(href, window.location.href);
       if (url.origin !== window.location.origin || prefetched.has(url.href)) return;
       prefetched.add(url.href);
-      fetch(url.href, {cache:'no-cache'}).then(r=>r.text()).catch(()=>{});
+      fetch(url.href, { cache: 'no-cache' }).then(r => r.text()).catch(() => {});
     } catch {}
   }
-  document.addEventListener('mouseover', e => { const a = e.target.closest('a'); a && prefetch(a.href); }, { passive:true });
-  document.addEventListener('touchstart', e => { const a = e.target.closest('a'); a && prefetch(a.href); }, { passive:true });
+  
+  document.addEventListener('mouseover', e => {
+    const a = e.target.closest('a');
+    if (a) prefetch(a.href);
+  }, { passive: true });
+  
+  document.addEventListener('touchstart', e => {
+    const a = e.target.closest('a');
+    if (a) prefetch(a.href);
+  }, { passive: true });
 });

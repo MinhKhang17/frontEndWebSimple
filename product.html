@@ -17,124 +17,65 @@
     <span class="font-semibold">Sản phẩm</span>
   </nav>
 
-  <div class="grid sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
-    <!-- Chén cao su -->
-    <section class="bg-white rounded-lg shadow-lg overflow-hidden product-card hover:shadow-xl transition-shadow duration-300" data-product="chenMu">
-      <div class="relative group">
-        <img src="images/product/chenMu/chenMu1.jpg" 
-             alt="Chén cao su - Hình 1" 
-             class="w-full h-48 sm:h-56 md:h-72 object-cover transform group-hover:scale-105 transition-transform duration-500"
-             loading="lazy"/>
-        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-          <div class="p-4 sm:p-6 text-white">
-            <span class="inline-block px-3 py-1 bg-green-500 text-white text-sm rounded-full">Sản phẩm mới</span>
-          </div>
-        </div>
-      </div>
-      <div class="p-6">
-        <h2 class="text-xl font-bold mb-2">Chén cao su hứng mủ</h2>
-        <div class="flex items-center gap-2 text-sm text-gray-600 mb-3">
-          <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-          </svg>
-          <span>Chất lượng cao</span>
-        </div>
-        <p class="text-gray-600">Chén cao su chất lượng cao, đàn hồi tốt, chịu nhiệt, dùng để hứng mủ.</p>
-        <div class="mt-4 space-y-3 text-sm text-gray-700">
-          <div class="flex items-center gap-2">
-            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-            </svg>
-            <span>Nhựa tổng hợp, dẻo, bóng</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-            </svg>
-            <span>Dung Tích: 1.5L</span>
-          </div>
-        </div>
-        <div class="mt-6 flex gap-3">
-          <a href="product-detail.html?product=chenMu" class="flex-1 bg-blue-600 text-white px-4 py-2 rounded text-center hover:bg-blue-700 transition-colors">
-            Xem chi tiết
-          </a>
-          <a href="contact.html?product=chenMu" class="flex-1 bg-green-600 text-white px-4 py-2 rounded text-center hover:bg-green-700 transition-colors">
-            Yêu cầu báo giá
-          </a>
-        </div>
-      </div>
-    </section>
+  <div class="grid sm:grid-cols-2 gap-6">
+    <!-- Chén cao su (simplified) -->
+    <article class="bg-white rounded-lg shadow product-card overflow-hidden" data-product="chenMu" role="article" aria-label="Chén cao su hứng mủ">
+      <img src="images/product/chenMu/chenMu1.jpg" alt="Chén cao su hứng mủ" class="w-full h-56 object-cover"/>
+      <div class="p-5">
+        <h2 class="text-lg font-semibold mb-1">Chén cao su hứng mủ</h2>
+        <p class="text-sm text-gray-600 mb-3">Chén cao su dùng để hứng mủ, bền, chịu nhiệt.</p>
 
-    <!-- Máng chắn mưa -->
-    <section class="bg-white rounded-lg shadow-lg overflow-hidden product-card hover:shadow-xl transition-shadow duration-300" data-product="mangChanMua">
-      <div class="relative group">
-        <img src="images/product/mangChanMua/mangChanMuaNgang.jpg" alt="Máng chắn mưa" class="w-full h-72 object-cover transform group-hover:scale-105 transition-transform duration-500"/>
-        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-          <div class="p-6 text-white">
-            <span class="inline-block px-3 py-1 bg-green-500 text-white text-sm rounded-full">Sản phẩm mới</span>
-          </div>
+        <ul class="text-sm text-gray-700 space-y-1 mb-4">
+          <li><strong>Chất liệu:</strong> Nhựa tổng hợp (dẻo)</li>
+          <li><strong>Dung tích:</strong> 1.5 L</li>
+          <li><strong>Màu sắc:</strong> Xám đen</li>
+        </ul>
+
+        <div class="flex gap-3">
+          <a href="product-detail.html?product=chenMu" class="flex-1 bg-blue-600 text-white px-3 py-2 rounded text-center text-sm hover:bg-blue-700">Xem chi tiết</a>
+          <a href="contact.html?product=chenMu" class="flex-1 bg-green-600 text-white px-3 py-2 rounded text-center text-sm hover:bg-green-700">Yêu cầu báo giá</a>
         </div>
       </div>
-      <div class="p-6">
-        <h2 class="text-xl font-bold mb-2">Máng chắn mưa PVC</h2>
-        <div class="flex items-center gap-2 text-sm text-gray-600 mb-3">
-          <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-          </svg>
-          <span>Chất lượng cao</span>
-        </div>
-        <p class="text-gray-600">Máng chắn mưa giúp bảo vệ mủ và thiết bị, dễ lắp đặt, chống tia UV.</p>
-        <div class="mt-4 space-y-3 text-sm text-gray-700">
-          <div class="flex items-center gap-2">
-            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-            </svg>
-            <span>PE dẻo</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-            </svg>
-            <span>Chiều dài: 0.5 - 3 m</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-            </svg>
-            <span>Bảo hành: 12 tháng</span>
-          </div>
-        </div>
-        <div class="mt-6 flex gap-3">
-          <a href="product-detail.html?product=mangChanMua" class="flex-1 bg-blue-600 text-white px-4 py-2 rounded text-center hover:bg-blue-700 transition-colors">
-            Xem chi tiết
-          </a>
-          <a href="contact.html?product=mangChanMua" class="flex-1 bg-green-600 text-white px-4 py-2 rounded text-center hover:bg-green-700 transition-colors">
-            Yêu cầu báo giá
-          </a>
+    </article>
+
+    <!-- Máng chắn mưa (simplified) -->
+    <article class="bg-white rounded-lg shadow product-card overflow-hidden" data-product="mangChanMua" role="article" aria-label="Máng chắn mưa PVC">
+      <img src="images/product/mangChanMua/mangChanMuaNgang.jpg" alt="Máng chắn mưa PVC" class="w-full h-56 object-cover"/>
+      <div class="p-5">
+        <h2 class="text-lg font-semibold mb-1">Máng chắn mưa PVC</h2>
+        <p class="text-sm text-gray-600 mb-3">Máng PVC/PE chống thấm, bảo vệ mủ trong mùa mưa.</p>
+
+        <ul class="text-sm text-gray-700 space-y-1 mb-4">
+          <li><strong>Chất liệu:</strong> Nhựa PE / PVC</li>
+          <li><strong>Kích thước chuẩn:</strong> 450 × 80 mm / 550 × 80 mm / 600 × 80 mm</li>
+          <li><strong>Dung sai:</strong> ±1 mm</li>
+          <li><strong>Kích thước theo yêu cầu</strong> Liên hệ với chúng tôi để đặt theo kích thước mong muốn của bạn</li>
+        </ul>
+
+        <div class="flex gap-3">
+          <a href="product-detail.html?product=mangChanMua" class="flex-1 bg-blue-600 text-white px-3 py-2 rounded text-center text-sm hover:bg-blue-700">Xem chi tiết</a>
+          <a href="contact.html?product=mangChanMua" class="flex-1 bg-green-600 text-white px-3 py-2 rounded text-center text-sm hover:bg-green-700">Yêu cầu báo giá</a>
         </div>
       </div>
-    </section>
+    </article>
   </div>
 </main>
 
 <div id="site-footer"></div>
+
 <script src="js/main.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Add click event to product cards
+  // Keep click-to-open-detail on card (but ignore clicks on links/buttons)
   document.querySelectorAll('.product-card').forEach(card => {
     card.addEventListener('click', function(e) {
-      // Đừng chuyển hướng nếu click vào button hoặc link
-      if (e.target.closest('button') || e.target.closest('a')) {
-        return;
-      }
-      // Lấy id sản phẩm từ data attribute
-      const productId = this.dataset.product;
-      // Chuyển đến trang chi tiết
-      window.location.href = `product-detail.html?product=${productId}`;
+      if (e.target.closest('a') || e.target.closest('button')) return;
+      const id = this.dataset.product;
+      if (id) window.location.href = `product-detail.html?product=${id}`;
     });
   });
 });
 </script>
+
 </body>
 </html>

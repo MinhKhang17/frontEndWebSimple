@@ -7,84 +7,389 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <title>Sản phẩm vật tư khai thác mủ cao su — Phong Hòa Phát</title>
   <style>
     body { font-family: 'Roboto', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    .step-num { background: linear-gradient(135deg,#10b981,#059669); color:#fff; }
+
+    /* Image lightbox */
+    .img-lightbox { 
+      position: fixed; 
+      inset: 0; 
+      display: none; 
+      align-items: center; 
+      justify-content: center; 
+      background: rgba(0,0,0,0.92); 
+      z-index: 70; 
+      padding: 20px;
+    }
+    .img-lightbox.active { display: flex; }
+    .img-lightbox img { 
+      max-width: 90%; 
+      max-height: 90vh; 
+      object-fit: contain; 
+      border-radius: 4px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    }
+    .img-lightbox .close-btn { 
+      position: absolute; 
+      top: 24px; 
+      right: 24px; 
+      background: white; 
+      border-radius: 50%; 
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer; 
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: transform 0.2s;
+    }
+    .img-lightbox .close-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* Video container - inline play */
+    .video-block { 
+      position: relative; 
+      width: 100%; 
+      background: #000;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #e5e7eb;
+    }
+    
+    .video-block.not-playing {
+      padding-top: 56.25%;
+    }
+    
+    .video-block > img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+      transition: opacity 0.3s;
+    }
+    
+    .video-block.playing > img {
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    .video-block > iframe {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border: 0;
+      display: none;
+    }
+    
+    .video-block.playing > iframe {
+      display: block;
+    }
+    
+    .video-block > .play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: all 0.2s;
+    }
+    
+    .video-block > .play-btn:hover {
+      transform: translate(-50%, -50%) scale(1.1);
+      background: white;
+    }
+    
+    .video-block.playing > .play-btn {
+      display: none;
+    }
+    
+    .video-block > .play-btn::after {
+      content: '';
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border-left: 16px solid #059669;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      margin-left: 4px;
+    }
+
+    /* Gallery hover effect */
+    .img-gallery img {
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .img-gallery img:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
-<div id="site-header"></div>
 
-<main class="max-w-6xl mx-auto px-4 py-12 page-transition">
-  <!-- Giới thiệu -->
-  <section class="bg-white p-6 rounded-lg shadow mb-10">
-    <h1 class="text-2xl font-bold mb-2">Giới thiệu</h1>
-    <p class="text-gray-700 mb-4">
-      Công ty TNHH Phong Hòa Phát chuyên sản xuất vật tư phục vụ khai thác mủ cao su.
-      Với quy trình sản xuất hiện đại và tiêu chuẩn kiểm soát chất lượng nghiêm ngặt,
-      chúng tôi cung cấp chén cao su, máng chắn mưa, dây buộc kiềng và nhiều phụ kiện khác cho nông trường và nhà máy.
-    </p>
+  <!-- Header include -->
+  <div id="site-header" data-include="/header.html"></div>
 
-    <div class="grid md:grid-cols-3 gap-4">
-      <div class="p-4 bg-gray-50 rounded text-center">
-        <h4 class="font-semibold">Sứ mệnh</h4>
-        <p class="text-sm text-gray-600">Cung cấp vật tư bền vững, tăng hiệu quả khai thác mủ.</p>
+  <main class="max-w-6xl mx-auto px-4 py-12">
+    
+    <!-- Intro Section -->
+    <section id="gioi-thieu" class="bg-white p-8 rounded-lg shadow mb-10">
+      <div class="md:flex md:items-center md:gap-8">
+        <div class="md:flex-1">
+          <h2 class="text-3xl font-extrabold mb-3">Sản phẩm vật tư khai thác mủ cao su — An toàn & hiệu quả</h2>
+          <p class="text-gray-700 mb-6">Công ty TNHH Phong Hòa Phát chuyên sản xuất vật tư phục vụ khai thác mủ cao su. Với quy trình sản xuất hiện đại và tiêu chuẩn kiểm soát chất lượng nghiêm ngặt, chúng tôi cung cấp chén cao su, máng chắn mưa, dây buộc kiềng và nhiều phụ kiện khác cho nông trường và nhà máy.</p>
+        </div>
+        <div class="md:w-96 mt-6 md:mt-0">
+          <div class="grid grid-cols-2 gap-3 img-gallery">
+            <img src="images/page/abou/chonNguyenLieuDauVao.jpg" alt="Nguyên liệu cao su" class="rounded-lg shadow object-cover w-full h-36 cursor-pointer" data-lightbox="true"/>
+            <img src="images/page/abou/dongGoi.jpg" alt="Gia công" class="rounded-lg shadow object-cover w-full h-36 cursor-pointer" data-lightbox="true"/>
+            <img src="images/page/abou/giaCong.jpg" alt="Kiểm định" class="rounded-lg shadow object-cover w-full h-36 cursor-pointer" data-lightbox="true"/>
+            <img src="images/page/abou/kiemDinh.jpg" alt="Đóng gói" class="rounded-lg shadow object-cover w-full h-36 cursor-pointer" data-lightbox="true"/>
+          </div>
+        </div>
       </div>
-      <div class="p-4 bg-gray-50 rounded text-center">
-        <h4 class="font-semibold">Quy trình</h4>
-        <p class="text-sm text-gray-600">Sản xuất, kiểm định và đóng gói theo tiêu chuẩn công nghiệp.</p>
+    </section>
+
+    <!-- Quy trình sản xuất - Tổng quan -->
+    <section class="bg-white p-8 rounded-lg shadow mb-10">
+      <h3 class="text-2xl font-semibold mb-6 text-center">Quy trình sản xuất</h3>
+      <div class="md:grid md:grid-cols-2 gap-8 items-start">
+        
+        <!-- Steps column -->
+        <div class="space-y-6">
+          <div class="flex gap-4 items-start">
+            <div class="w-12 h-12 flex items-center justify-center rounded-full step-num font-semibold flex-shrink-0">1</div>
+            <div>
+              <h4 class="font-semibold">Chọn nguyên liệu đầu vào</h4>
+              <p class="text-gray-600 text-sm">Chúng tôi lựa chọn cao su nguyên sinh đạt tiêu chuẩn kỹ thuật, đảm bảo độ bền và tính đàn hồi cao cho từng sản phẩm.</p>
+            </div>
+          </div>
+          
+          <div class="flex gap-4 items-start">
+            <div class="w-12 h-12 flex items-center justify-center rounded-full step-num font-semibold flex-shrink-0">2</div>
+            <div>
+              <h4 class="font-semibold">Gia công & tạo hình</h4>
+              <p class="text-gray-600 text-sm">Quy trình ép khuôn được thực hiện trên dây chuyền hiện đại, đảm bảo độ chính xác và đồng nhất.</p>
+            </div>
+          </div>
+          
+          <div class="flex gap-4 items-start">
+            <div class="w-12 h-12 flex items-center justify-center rounded-full step-num font-semibold flex-shrink-0">3</div>
+            <div>
+              <h4 class="font-semibold">Kiểm định chất lượng</h4>
+              <p class="text-gray-600 text-sm">Mỗi lô sản phẩm đều trải qua kiểm tra nghiêm ngặt về độ bền, độ dẻo và khả năng chịu nhiệt.</p>
+            </div>
+          </div>
+          
+          <div class="flex gap-4 items-start">
+            <div class="w-12 h-12 flex items-center justify-center rounded-full step-num font-semibold flex-shrink-0">4</div>
+            <div>
+              <h4 class="font-semibold">Đóng gói & giao hàng</h4>
+              <p class="text-gray-600 text-sm">Sản phẩm được đóng gói an toàn, giao hàng đúng thời gian và bảo đảm chất lượng đến tay khách hàng.</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Visual column -->
+        <div class="space-y-4 mt-6 md:mt-0">
+          <div class="rounded-lg overflow-hidden border">
+            <img src="images/page/abou/may/mayDap1.jpg" alt="Gia công cao su - banner" class="object-cover w-full h-64" />
+          </div>
+          
+          <div class="bg-gray-50 p-5 rounded-lg border">
+            <p class="text-sm text-gray-700 font-medium mb-3">Xem video ngắn về quy trình sản xuất của chúng tôi:</p>
+            <div class="rounded-lg overflow-hidden border">
+              <iframe 
+                src="https://drive.google.com/file/d/1CZp3r0EtuoeD8l1FMUXlDq5lny_k7YPW/preview" 
+                class="w-full border-0" 
+                style="height: 300px;"
+                allow="autoplay; encrypted-media" 
+                allowfullscreen>
+              </iframe>
+            </div>
+          </div>
+          
+          <div class="flex gap-3 mt-4">
+            <a href="#lien-he" class="flex-1 px-4 py-3 text-center bg-green-600 text-white rounded font-medium">Yêu cầu báo giá</a>
+            <a href="#" class="flex-1 px-4 py-3 text-center border rounded font-medium">Tải catalog</a>
+          </div>
+        </div>
       </div>
-      <div class="p-4 bg-gray-50 rounded text-center">
-        <h4 class="font-semibold">Chính sách</h4>
-        <p class="text-sm text-gray-600">Hậu mãi & hỗ trợ kỹ thuật nhanh chóng.</p>
+    </section>
+
+    <!-- Video chi tiết quy trình -->
+    <section id="video-quy-trinh" class="bg-white p-8 rounded-lg shadow mb-10">
+      <h3 class="text-2xl font-semibold mb-6 text-center">Video chi tiết quy trình sản xuất</h3>
+
+      <div class="space-y-6">
+        
+        <!-- Video 1: Máy ép chén -->
+        <div>
+          <h4 class="font-semibold mb-2">Máy ép chén cao su</h4>
+          <div class="video-block not-playing" data-video-id="1Ktb6tdY181jBnAWZ6QPYYVYQ6IT5wZ0f">
+            <img src="images/page/abou/may/mayEpChen.jpg" alt="Máy ép chén poster"/>
+            <button class="play-btn" aria-label="Play Máy ép chén"></button>
+            <iframe src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <!-- Video 2: Máy dập -->
+        <div>
+          <h4 class="font-semibold mb-2">Máy dập cao su</h4>
+          <div class="video-block not-playing" data-video-id="1vijQ4zDd0f-0Iww4rP1TOw6CJbYjFSAI">
+            <img src="images/page/abou/may/mayDap.jpg" alt="Máy dập poster"/>
+            <button class="play-btn" aria-label="Play Máy dập"></button>
+            <iframe src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <!-- Video 3: Máy cuộn -->
+        <div>
+          <h4 class="font-semibold mb-2">Máy cuộn cao su</h4>
+          <div class="video-block not-playing" data-video-id="1i5LGkNMHQsaUU-yR30xvBoeVVpR9-JRk">
+            <img src="images/page/abou/may/mayCuon.jpg" alt="Máy cuộn poster"/>
+            <button class="play-btn" aria-label="Play Máy cuộn"></button>
+            <iframe src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <!-- Video 4: Xưởng sản xuất -->
+        <div>
+          <h4 class="font-semibold mb-2">Sản xuất & đóng gói</h4>
+          <div class="video-block not-playing" data-video-id="1ApmG5KxHA2Tw5sZLPCtEpwh____aGEhC">
+            <img src="images/page/abou/may/dongGoi.jpg" alt="Xưởng poster"/>
+            <button class="play-btn" aria-label="Play Xưởng"></button>
+            <iframe src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+        </div>
+
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Quy trình sản xuất -->
-  <section class="bg-white p-6 rounded-lg shadow mb-10">
-    <h2 class="text-2xl font-semibold mb-4 text-center">Quy trình sản xuất</h2>
-    <div class="grid md:grid-cols-2 gap-8 items-center">
-      <div class="space-y-4">
-        <h3 class="text-lg font-semibold">1️⃣ Chọn nguyên liệu đầu vào</h3>
-        <p class="text-gray-600 text-sm">
-          Chúng tôi lựa chọn cao su nguyên sinh đạt tiêu chuẩn kỹ thuật, đảm bảo độ bền và tính đàn hồi cao cho từng sản phẩm.
-        </p>
-
-        <h3 class="text-lg font-semibold">2️⃣ Gia công & tạo hình</h3>
-        <p class="text-gray-600 text-sm">
-          Quy trình ép khuôn được thực hiện trên dây chuyền hiện đại, đảm bảo độ chính xác và đồng nhất.
-        </p>
-
-        <h3 class="text-lg font-semibold">3️⃣ Kiểm định chất lượng</h3>
-        <p class="text-gray-600 text-sm">
-          Mỗi lô sản phẩm đều trải qua kiểm tra nghiêm ngặt về độ bền, độ dẻo và khả năng chịu nhiệt.
-        </p>
-
-        <h3 class="text-lg font-semibold">4️⃣ Đóng gói & giao hàng</h3>
-        <p class="text-gray-600 text-sm">
-          Sản phẩm được đóng gói an toàn, giao hàng đúng thời gian và bảo đảm chất lượng đến tay khách hàng.
-        </p>
+    <!-- CTA Section -->
+    <section class="bg-white p-6 rounded-lg shadow text-center">
+      <div class="max-w-xl mx-auto">
+        <h3 class="text-xl font-semibold mb-3">Bạn cần báo giá số lượng lớn?</h3>
+        <p class="text-gray-600 mb-4">Liên hệ để nhận bảng giá chi tiết và ưu đãi cho đại lý.</p>
+        <div class="flex gap-3 justify-center">
+<a href="contact.html" class="px-6 py-3 bg-green-600 text-white rounded">Yêu cầu báo giá</a>
+          <a href="#" class="px-6 py-3 border rounded">Tải catalog</a>
+        </div>
       </div>
+    </section>
 
-      <div class="grid grid-cols-2 gap-4">
-        <img src="images/page/abou/chonNguyenLieuDauVao.jpg" alt="Nguyên liệu cao su" class="rounded-lg shadow object-cover w-full h-40 md:h-48" />
-        <img src="images/page/abou/giaCong.jpg" alt="Gia công cao su" class="rounded-lg shadow object-cover w-full h-40 md:h-48" />
-        <img src="images/page/abou/kiemDinh.jpg" alt="Kiểm định chất lượng" class="rounded-lg shadow object-cover w-full h-40 md:h-48" />
-        <img src="images/page/abou/dongGoi.jpg" alt="Đóng gói sản phẩm" class="rounded-lg shadow object-cover w-full h-40 md:h-48" />
-      </div>
-    </div>
-  </section>
+  </main>
 
-  <!-- Video giới thiệu doanh nghiệp -->
-  <section class="bg-white p-6 rounded-lg shadow mb-10">
-    <h2 class="text-2xl font-semibold mb-4 text-center">Video giới thiệu</h2>
-    <div class="aspect-w-16 aspect-h-9 w-full rounded-lg overflow-hidden shadow">
-      <iframe class="w-full h-full" src="https://www.youtube.com/embed/VIDEO_ID" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
-  </section>
-</main>
+  <!-- Footer include -->
+  <div id="site-footer" data-include="/footer.html">
+    <footer class="bg-white text-center p-6 mt-12 border-t">
+      <div class="text-sm text-gray-600">© <span id="year">2025</span> Công ty TNHH Phong Hòa Phát</div>
+    </footer>
+  </div>
 
-<div id="site-footer"></div>
+  <!-- Image Lightbox -->
+  <div id="img-lightbox" class="img-lightbox">
+    <button class="close-btn" aria-label="Đóng">✕</button>
+    <img src="" alt=""/>
+  </div>
+
+<script>
+(function(){
+  // Set year
+  const yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  
+
+  // Image lightbox
+  const lightbox = document.getElementById('img-lightbox');
+  const lightboxImg = lightbox ? lightbox.querySelector('img') : null;
+  const lightboxClose = lightbox ? lightbox.querySelector('.close-btn') : null;
+
+  document.querySelectorAll('img[data-lightbox]').forEach(img => {
+    img.addEventListener('click', () => {
+      if (lightbox && lightboxImg) {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    });
+  });
+
+  if (lightboxClose) {
+    lightboxClose.addEventListener('click', () => {
+      if (lightbox) {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+
+  if (lightbox) {
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+
+  // ESC key to close lightbox
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox && lightbox.classList.contains('active')) {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
+
+  // Video inline play
+  document.querySelectorAll('.video-block').forEach(container => {
+    const playBtn = container.querySelector('.play-btn');
+    const posterImg = container.querySelector('img');
+    const iframe = container.querySelector('iframe');
+    const videoId = container.getAttribute('data-video-id');
+
+    if (playBtn && iframe && videoId) {
+      const handlePlay = () => {
+        // Set iframe src
+        iframe.src = `https://drive.google.com/file/d/` + videoId + `/preview`;
+        
+        // Change state
+        container.classList.remove('not-playing');
+        container.classList.add('playing');
+        
+        // Scroll to video smoothly
+        setTimeout(() => {
+          container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+      };
+
+      playBtn.addEventListener('click', handlePlay);
+      if (posterImg) posterImg.addEventListener('click', handlePlay);
+    }
+  });
+
+})();
+</script>
 <script src="js/main.js"></script>
+
 </body>
 </html>

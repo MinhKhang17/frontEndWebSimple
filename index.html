@@ -7,85 +7,205 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>body{font-family:'Roboto',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;}</style>
+  <style>
+    body{font-family:'Roboto',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;}
+    .product-card { transition: transform 0.2s, box-shadow 0.2s; }
+    .product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.12); }
+  </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 <div id="site-header"></div>
 
-<main class="max-w-6xl mx-auto px-4 py-12 page-transition">
-  <section id="mainBanner" class="rounded-lg overflow-hidden relative shadow-lg mb-8">
+<main class="max-w-6xl mx-auto px-4 py-12">
+  
+  <!-- Hero Banner -->
+  <section id="mainBanner" class="rounded-lg overflow-hidden relative shadow-lg mb-10">
     <a id="bannerLink" href="product.html">
       <img id="bannerImage" src="images/page/page1.jpg" 
-           alt="Banner" 
+           alt="Banner Phong Hòa Phát" 
            class="w-full h-[280px] sm:h-[340px] md:h-[420px] object-cover"
            loading="eager"
            fetchpriority="high"/>
     </a>
-    <div class="absolute inset-0 bg-gradient-to-r from-black/60 sm:from-black/40 to-transparent flex items-center">
-      <div class="px-4 sm:ml-8 max-w-xl text-white">
-        <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-2">Chất Lượng Tạo Nên Sự Bền Vững</h1>
-        <p class="text-base sm:text-lg opacity-90 line-clamp-2 sm:line-clamp-none mb-4">Phụ kiện cao su chất lượng cao - Đồng hành cùng sự phát triển của ngành cao su Việt Nam</p>
+    <div class="absolute inset-0 bg-gradient-to-r from-black/60 sm:from-black/50 to-transparent flex items-center">
+      <div class="px-6 sm:ml-8 max-w-xl text-white">
+        <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">Chất Lượng Tạo Nên Sự Bền Vững</h1>
+        <p class="text-base sm:text-lg opacity-95 mb-4">Phụ kiện cao su chất lượng cao - Đồng hành cùng sự phát triển của ngành cao su Việt Nam</p>
         <a href="product.html" 
-           class="inline-block bg-green-600 hover:bg-green-700 transition-colors px-4 py-2 rounded-lg text-white text-sm sm:text-base">
+           class="inline-block bg-green-600 hover:bg-green-700 transition-colors px-6 py-3 rounded-lg text-white font-medium">
           Xem sản phẩm
         </a>
       </div>
     </div>
   </section>
 
-  <section class="bg-white p-6 rounded-lg shadow mb-8">
-    <div class="grid md:grid-cols-3 gap-6 items-center">
-      <div class="md:col-span-2">
+  <!-- Company Intro -->
+  <section class="bg-white p-6 rounded-lg shadow mb-10">
+    <div class="md:flex md:items-center md:justify-between md:gap-8">
+      <div class="md:flex-1 mb-4 md:mb-0">
         <h2 class="text-2xl font-semibold mb-2">Phong Hòa Phát — Vật tư ngành cao su</h2>
-        <p class="text-gray-600">Phong Hòa Phát chuyên sản xuất vật tư phục vụ khai thác mủ cao su: chén cao su, máng chắn mưa, dây buộc kiềng và phụ kiện ngành. Quy trình sản xuất hiện đại, tiêu chuẩn chất lượng và dịch vụ hậu mãi.</p>
+        <p class="text-gray-600">Phong Hòa Phát chuyên sản xuất vật tư phục vụ khai thác mủ cao su: chén cao su, máng chắn mưa. Quy trình sản xuất hiện đại, tiêu chuẩn chất lượng và dịch vụ hậu mãi tận tâm.</p>
       </div>
-      <div class="text-center">
-        <a href="contact.html" class="inline-flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded">Gọi ngay: 0966 019 018</a>
+      <div class="text-center md:text-right">
+        <a href="contact.html" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-5 py-3 rounded-lg font-medium transition-colors">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+          0966 019 018
+        </a>
       </div>
     </div>
   </section>
 
-  <section class="mb-8">
-    <h3 class="text-xl font-semibold mb-4">Sản phẩm tiêu biểu</h3>
-    <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-      <article class="bg-white rounded-lg shadow overflow-hidden">
-        <a href="product.html#chen-01">
-          <div class="relative pb-[66%]"><img src="images/product/chenMu/chenMu1.jpg" alt="Chén cao su" class="absolute inset-0 w-full h-full object-cover"/></div>
-          <div class="p-4">
-            <h4 class="font-semibold">Chén cao su chịu nhiệt</h4>
-            <p class="text-sm text-gray-600 mt-2">Chén cao su chất lượng, chịu nhiệt, dùng hứng mủ hiệu quả.</p>
+  <!-- Products Section -->
+  <section class="mb-10">
+    <div class="flex items-center justify-between mb-6">
+      <h3 class="text-2xl font-semibold">Sản phẩm tiêu biểu</h3>
+      <a href="product.html" class="text-green-600 hover:text-green-700 font-medium text-sm">Xem tất cả →</a>
+    </div>
+
+    <div class="grid gap-6 grid-cols-1 md:grid-cols-2">
+
+      <!-- Product 1: Chén cao su -->
+      <article class="bg-white rounded-lg shadow product-card overflow-hidden">
+        <div class="grid md:grid-cols-5 gap-4">
+          <!-- Image -->
+          <div class="md:col-span-2">
+            <a href="product.html#chen-01" class="block">
+              <img src="images/product/chenMu/chenMu1.jpg" 
+                   alt="Chén cao su chịu nhiệt" 
+                   class="w-full h-full object-cover min-h-[200px] md:min-h-full"/>
+            </a>
           </div>
-        </a>
+          
+          <!-- Content -->
+          <div class="md:col-span-3 p-5">
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h4 class="text-lg font-semibold mb-1">Chén cao su chịu nhiệt</h4>
+                <span class="inline-block text-xs bg-green-100 text-green-700 px-2 py-1 rounded font-medium">Sản phẩm mới</span>
+              </div>
+            </div>
+
+            <p class="text-sm text-gray-600 mb-4">Chén cao su chất lượng cao, chịu nhiệt tốt, dùng để hứng mủ cao su hiệu quả, bền bỉ.</p>
+
+            <!-- Specifications -->
+            <div class="mb-4 space-y-2">
+              <div class="flex items-start gap-2 text-sm">
+                <span class="font-medium text-gray-700 min-w-[90px]">Chất liệu:</span>
+                <span class="text-gray-600">Nhựa tổng hợp, dẻo dai</span>
+              </div>
+              <div class="flex items-start gap-2 text-sm">
+                <span class="font-medium text-gray-700 min-w-[90px]">Dung tích:</span>
+                <span class="text-gray-600">1.5 lít</span>
+              </div>
+              <div class="flex items-start gap-2 text-sm">
+                <span class="font-medium text-gray-700 min-w-[90px]">Kích thước:</span>
+                <span class="text-gray-600">Đặt theo yêu cầu (DxRxC mm)</span>
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex gap-2">
+              <a href="product.html#chen-01" 
+                 class="flex-1 inline-flex justify-center items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded font-medium text-sm transition-colors">
+                Chi tiết
+              </a>
+              <a href="contact.html?product=chenMu" 
+                 class="inline-flex items-center px-4 py-2 border border-gray-300 hover:border-green-600 hover:text-green-600 rounded font-medium text-sm transition-colors">
+                Báo giá
+              </a>
+            </div>
+          </div>
+        </div>
       </article>
 
-      <article class="bg-white rounded-lg shadow overflow-hidden">
-        <a href="product.html#mang-01">
-          <div class="relative pb-[66%]"><img src="images/product/mangChanMua/mangChanMua.jpg" alt="Máng chắn mưa" class="absolute inset-0 w-full h-full object-cover"/></div>
-          <div class="p-4">
-            <h4 class="font-semibold">Máng chắn mưa PVC</h4>
-            <p class="text-sm text-gray-600 mt-2">Máng nhẹ, bền, bảo vệ mủ trong mùa mưa.</p>
+      <!-- Product 2: Máng chắn mưa -->
+      <article class="bg-white rounded-lg shadow product-card overflow-hidden">
+        <div class="grid md:grid-cols-5 gap-4">
+          <!-- Image -->
+          <div class="md:col-span-2">
+            <a href="product.html#mang-01" class="block">
+              <img src="images/product/mangChanMua/mangChanMuaNgang.jpg" 
+                   alt="Máng chắn mưa PVC" 
+                   class="w-full h-full object-cover min-h-[200px] md:min-h-full"/>
+            </a>
           </div>
-        </a>
+          
+          <!-- Content -->
+          <div class="md:col-span-3 p-5">
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h4 class="text-lg font-semibold mb-1">Máng chắn mưa PVC</h4>
+                <span class="inline-block text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded font-medium">Sẵn có</span>
+              </div>
+            </div>
+
+            <p class="text-sm text-gray-600 mb-4">Máng nhựa PVC nhẹ, bền, chống thấm tốt, bảo vệ mủ cao su trong mùa mưa hiệu quả.</p>
+
+            <!-- Specifications -->
+            <div class="mb-4">
+              <div class="mb-2">
+                <span class="font-medium text-gray-700 text-sm">Kích thước phổ biến:</span>
+              </div>
+              <div class="grid grid-cols-1 gap-1.5 mb-3">
+                <div class="flex items-center gap-2 text-sm">
+                  <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                  <span class="text-gray-600">450 x 80 ±1 mm</span>
+                </div>
+                <div class="flex items-center gap-2 text-sm">
+                  <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                  <span class="text-gray-600">550 x 80 ±1 mm</span>
+                </div>
+                <div class="flex items-center gap-2 text-sm">
+                  <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                  <span class="text-gray-600">600 x 80 ±1 mm</span>
+                </div>
+              </div>
+              <div class="text-xs text-gray-500 bg-gray-50 p-2 rounded">
+                <strong>Đặt kích thước riêng:</strong> DxRxC (mm). VD: 450 x 80 x 12 mm
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex gap-2">
+              <a href="product.html#mang-01" 
+                 class="flex-1 inline-flex justify-center items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded font-medium text-sm transition-colors">
+                Chi tiết
+              </a>
+              <a href="contact.html?product=mangChanMua" 
+                 class="inline-flex items-center px-4 py-2 border border-gray-300 hover:border-green-600 hover:text-green-600 rounded font-medium text-sm transition-colors">
+                Báo giá
+              </a>
+            </div>
+          </div>
+        </div>
       </article>
+
     </div>
   </section>
 
-  <section class="bg-white p-6 rounded-lg shadow text-center">
-    <h3 class="text-xl font-semibold mb-2">Bạn cần báo giá số lượng lớn?</h3>
-    <p class="text-gray-600 mb-4">Liên hệ để nhận bảng giá chi tiết và ưu đãi cho đại lý.</p>
-    <a href="contact.html" class="inline-block bg-blue-600 text-white px-6 py-2 rounded">Yêu cầu báo giá</a>
+  <!-- CTA Section -->
+  <section class="bg-gradient-to-r from-green-600 to-emerald-600 p-8 rounded-lg shadow-lg text-center text-white">
+    <div class="max-w-2xl mx-auto">
+      <h3 class="text-2xl font-bold mb-2">Bạn cần báo giá số lượng lớn?</h3>
+      <p class="mb-6 text-green-50">Liên hệ ngay để nhận bảng giá chi tiết và ưu đãi đặc biệt dành cho đại lý, nhà phân phối.</p>
+      <div class="flex gap-3 justify-center flex-wrap">
+        <a href="contact.html" class="inline-flex items-center gap-2 bg-white text-green-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+          Yêu cầu báo giá
+        </a>
+        <a href="tel:0966019018" class="inline-flex items-center gap-2 border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-green-600 transition-colors">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+          Gọi: 0966 019 018
+        </a>
+      </div>
+    </div>
   </section>
 </main>
 
 <div id="site-footer"></div>
 
-  <script src="js/main.js"></script>
-  <script>
-    // Initialize partials on page load
-    document.addEventListener('DOMContentLoaded', () => {
-      loadPartial('#site-header', 'header.html');
-      loadPartial('#site-footer', 'footer.html');
-    });
-  </script>
+
+<script src="js/main.js"></script>
+
 </body>
 </html>
