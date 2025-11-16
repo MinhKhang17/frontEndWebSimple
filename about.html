@@ -9,120 +9,59 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <title>Sản phẩm vật tư khai thác mủ cao su — Phong Hòa Phát</title>
   <style>
-    /* Base */
     body { font-family: 'Roboto', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
     .step-num { background: linear-gradient(135deg,#10b981,#059669); color:#fff; }
 
-    /* Image lightbox */
-    .img-lightbox { 
-      position: fixed; 
-      inset: 0; 
-      display: none; 
-      align-items: center; 
-      justify-content: center; 
-      background: rgba(0,0,0,0.92); 
-      z-index: 70; 
-      padding: 20px;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: pan-y;
-    }
+    /* Lightbox */
+    .img-lightbox { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,0.92); z-index: 70; padding: 20px; touch-action: pan-y; }
     .img-lightbox.active { display: flex; }
-    .img-lightbox img { 
-      max-width: 100%; 
-      max-height: 92vh; 
-      object-fit: contain; 
-      border-radius: 4px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-      -webkit-user-select: none;
-    }
-    .img-lightbox .close-btn { 
-      position: absolute; 
-      top: 18px; 
-      right: 18px; 
-      background: white; 
-      border-radius: 50%; 
-      width: 44px;
-      height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer; 
-      font-size: 22px;
-      font-weight: bold;
-      color: #333;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      transition: transform 0.14s ease;
-      z-index: 75;
-      -webkit-tap-highlight-color: transparent;
-    }
+    .img-lightbox img { max-width: 100%; max-height: 92vh; object-fit: contain; border-radius: 4px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); -webkit-user-select: none; }
+    .img-lightbox .close-btn { position: absolute; top: 18px; right: 18px; background: white; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 22px; font-weight: bold; color: #333; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: transform 0.14s ease; z-index: 75; }
     .img-lightbox .close-btn:active { transform: scale(0.98); }
 
-    /* Video container - responsive */
-    .video-block { 
-      position: relative; 
-      width: 100%; 
-      background: #000;
-      border-radius: 8px;
-      overflow: hidden;
-      border: 1px solid #e5e7eb;
-      /* remove fixed min-height so the intrinsic ratio controls height on small screens */
-      min-height: 0;
-    }
-    /* Use intrinsic ratio for responsiveness */
+    /* Video */
+    .video-block { position: relative; width: 100%; background: #000; border-radius: 8px; overflow: hidden; border: 1px solid #e5e7eb; min-height: 0; }
     .video-inner { position: relative; padding-top: 56.25%; }
     .video-inner iframe, .video-inner img { position: absolute; top:0; left:0; width:100%; height:100%; }
 
-    .video-block.not-playing .video-poster { display:block; }
-    .video-block.playing .video-poster { display:none; }
-    .video-block .video-poster { object-fit:cover; cursor:pointer; }
-
-    .video-block .play-btn {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.95);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 2;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.18);
-      transition: transform 0.16s ease;
-      -webkit-tap-highlight-color: transparent;
+    /* ẨN HOÀN TOÀN KHI CHẠY */
+    .video-block.not-playing .video-poster,
+    .video-block.not-playing .play-btn { display: block; }
+    .video-block.playing .video-poster,
+    .video-block.playing .play-btn {
+      display: none !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
     }
-    .video-block .play-btn:active { transform: translate(-50%, -50%) scale(0.98); }
-    .video-block .play-btn::after { content: ''; display:inline-block; width:0; height:0; border-left: 14px solid #059669; border-top: 9px solid transparent; border-bottom: 9px solid transparent; margin-left:6px; }
 
-    /* Gallery hover effect */
-    .img-gallery img { transition: transform .18s, box-shadow .18s; }
-    .img-gallery img:active { transform: scale(.995); }
+    .video-block .video-poster { object-fit: cover; cursor: pointer; }
+    .video-block .play-btn {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,0.95);
+      display: flex; align-items: center; justify-content: center; z-index: 10; cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.18); transition: transform 0.16s ease;
+    }
+    .video-block .play-btn::after { content: ''; display: inline-block; width: 0; height: 0; border-left: 14px solid #059669; border-top: 9px solid transparent; border-bottom: 9px solid transparent; margin-left: 6px; }
 
-    /* Reduced shadows on mobile for performance */
+    /* ẨN UI YOUTUBE */
+    .video-inner iframe { pointer-events: none; }
+    .video-block.playing .video-inner iframe { pointer-events: auto; }
+
     @media (max-width: 640px) {
       .step-num { width: 44px; height:44px; font-size:16px; }
       .video-block .play-btn { width:72px; height:72px; }
-      .img-gallery img { height: 88px; }
       main { padding-left: 16px; padding-right: 16px; }
-      .shadow { box-shadow: none !important; }
     }
-
-    /* Larger touch targets */
     a, button { touch-action: manipulation; }
-
-    /* Utility tweaks */
     .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-  <!-- Header include (keeps server include) -->
   <div id="site-header" data-include="/header.html"></div>
 
   <main class="max-w-6xl mx-auto px-4 py-8 sm:py-12">
+
     <!-- Intro Section -->
     <section id="gioi-thieu" class="bg-white p-6 sm:p-8 rounded-lg shadow mb-6">
       <div class="md:flex md:items-center md:gap-6">
@@ -132,69 +71,40 @@
         </div>
         <div class="md:w-80 mt-4 md:mt-0">
           <div class="grid grid-cols-2 gap-3 img-gallery">
-            <img srcset="images/page/abou/chonNguyenLieuDauVao.jpg 1x" src="images/page/abou/chonNguyenLieuDauVao.jpg" alt="Nguyên liệu cao su" class="rounded-lg object-cover w-full h-24 sm:h-36 cursor-pointer" data-lightbox="true" loading="lazy"/>
-            <img srcset="images/page/abou/dongGoi.jpg 1x" src="images/page/abou/dongGoi.jpg" alt="Gia công" class="rounded-lg object-cover w-full h-24 sm:h-36 cursor-pointer" data-lightbox="true" loading="lazy"/>
-            <img srcset="images/page/abou/giaCong.jpg 1x" src="images/page/abou/giaCong.jpg" alt="Kiểm định" class="rounded-lg object-cover w-full h-24 sm:h-36 cursor-pointer" data-lightbox="true" loading="lazy"/>
-            <img srcset="images/page/abou/kiemDinh.jpg 1x" src="images/page/abou/kiemDinh.jpg" alt="Đóng gói" class="rounded-lg object-cover w-full h-24 sm:h-36 cursor-pointer" data-lightbox="true" loading="lazy"/>
+            <img src="images/page/abou/chonNguyenLieuDauVao.jpg" alt="Nguyên liệu" class="rounded-lg object-cover w-full h-24 sm:h-36 cursor-pointer" data-lightbox="true" loading="lazy"/>
+            <img src="images/page/abou/dongGoi.jpg" alt="Đóng gói" class="rounded-lg object-cover w-full h-24 sm:h-36 cursor-pointer" data-lightbox="true" loading="lazy"/>
+            <img src="images/page/abou/giaCong.jpg" alt="Gia công" class="rounded-lg object-cover w-full h-24 sm:h-36 cursor-pointer" data-lightbox="true" loading="lazy"/>
+            <img src="images/page/abou/kiemDinh.jpg" alt="Kiểm định" class="rounded-lg object-cover w-full h-24 sm:h-36 cursor-pointer" data-lightbox="true" loading="lazy"/>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Quy trình sản xuất - Tổng quan -->
+    <!-- Quy trình sản xuất -->
     <section class="bg-white p-6 sm:p-8 rounded-lg shadow mb-6">
       <h3 class="text-xl sm:text-2xl font-semibold mb-4 text-center">Quy trình sản xuất</h3>
       <div class="md:grid md:grid-cols-2 gap-6 items-start">
-        <!-- Steps column -->
         <div class="space-y-5">
-          <div class="flex gap-3 items-start">
-            <div class="w-12 h-12 flex items-center justify-center rounded-full step-num font-semibold flex-shrink-0">1</div>
-            <div>
-              <h4 class="font-semibold">Chọn nguyên liệu đầu vào</h4>
-              <p class="text-gray-600 text-sm">Chúng tôi lựa chọn cao su nguyên sinh đạt tiêu chuẩn kỹ thuật, đảm bảo độ bền và tính đàn hồi cao cho từng sản phẩm.</p>
-            </div>
-          </div>
-
-          <div class="flex gap-3 items-start">
-            <div class="w-12 h-12 flex items-center justify-center rounded-full step-num font-semibold flex-shrink-0">2</div>
-            <div>
-              <h4 class="font-semibold">Gia công &amp; tạo hình</h4>
-              <p class="text-gray-600 text-sm">Quy trình ép khuôn được thực hiện trên dây chuyền hiện đại, đảm bảo độ chính xác và đồng nhất.</p>
-            </div>
-          </div>
-
-          <div class="flex gap-3 items-start">
-            <div class="w-12 h-12 flex items-center justify-center rounded-full step-num font-semibold flex-shrink-0">3</div>
-            <div>
-              <h4 class="font-semibold">Kiểm định chất lượng</h4>
-              <p class="text-gray-600 text-sm">Mỗi lô sản phẩm đều trải qua kiểm tra nghiêm ngặt về độ bền, độ dẻo và khả năng chịu nhiệt.</p>
-            </div>
-          </div>
-
-          <div class="flex gap-3 items-start">
-            <div class="w-12 h-12 flex items-center justify-center rounded-full step-num font-semibold flex-shrink-0">4</div>
-            <div>
-              <h4 class="font-semibold">Đóng gói &amp; giao hàng</h4>
-              <p class="text-gray-600 text-sm">Sản phẩm được đóng gói an toàn, giao hàng đúng thời gian và bảo đảm chất lượng đến tay khách hàng.</p>
-            </div>
-          </div>
+          <div class="flex gap-3 items-start"><div class="w-12 h-12 flex items-center justify-center rounded-full step-num font-semibold flex-shrink-0">1</div><div><h4 class="font-semibold">Chọn nguyên liệu đầu vào</h4><p class="text-gray-600 text-sm">Chúng tôi lựa chọn cao su nguyên sinh đạt tiêu chuẩn kỹ thuật, đảm bảo độ bền và tính đàn hồi cao cho từng sản phẩm.</p></div></div>
+          <div class="flex gap-3 items-start"><div class="w-12 h-12 flex items-center justify-center rounded-full step-num font-semibold flex-shrink-0">2</div><div><h4 class="font-semibold">Gia công &amp; tạo hình</h4><p class="text-gray-600 text-sm">Quy trình ép khuôn được thực hiện trên dây chuyền hiện đại, đảm bảo độ chính xác và đồng nhất.</p></div></div>
+          <div class="flex gap-3 items-start"><div class="w-12 h-12 flex items-center justify-center rounded-full step-num font-semibold flex-shrink-0">3</div><div><h4 class="font-semibold">Kiểm định chất lượng</h4><p class="text-gray-600 text-sm">Mỗi lô sản phẩm đều trải qua kiểm tra nghiêm ngặt về độ bền, độ dẻo và khả năng chịu nhiệt.</p></div></div>
+          <div class="flex gap-3 items-start"><div class="w-12 h-12 flex items-center justify-center rounded-full step-num font-semibold flex-shrink-0">4</div><div><h4 class="font-semibold">Đóng gói &amp; giao hàng</h4><p class="text-gray-600 text-sm">Sản phẩm được đóng gói an toàn, giao hàng đúng thời gian và bảo đảm chất lượng đến tay khách hàng.</p></div></div>
         </div>
 
-        <!-- Visual column -->
         <div class="space-y-4 mt-4 md:mt-0">
           <div class="rounded-lg overflow-hidden border">
-            <img src="images/page/abou/may/mayDap1.jpg" alt="Gia công cao su - banner" class="object-cover w-full h-44 sm:h-64" loading="lazy" />
+            <img src="images/page/abou/may/mayDap1.jpg" alt="Banner" class="object-cover w-full h-44 sm:h-64" loading="lazy" />
           </div>
 
           <div class="bg-gray-50 p-4 sm:p-5 rounded-lg border">
             <p class="text-sm text-gray-700 font-medium mb-3">Xem video ngắn về quy trình sản xuất của chúng tôi:</p>
             <div class="rounded-lg overflow-hidden border">
-              <!-- Keep iframe in responsive wrapper. We will lazy-load iframe src only on play for performance -->
-              <div class="video-block not-playing" data-video-id="1CZp3r0EtuoeD8l1FMUXlDq5lny_k7YPW">
+              <!-- VIDEO 1: Tổng quan -->
+              <div class="video-block not-playing" data-video-id="NNivheW6Qiw" data-youtube>
                 <div class="video-inner">
-                  <img class="video-poster" src="images/page/abou/may/mayDap1.jpg" alt="Poster video" loading="lazy"/>
+                  <img class="video-poster" data-poster-yt src="images/page/abou/dongGoi.jpg" alt="Poster" loading="lazy"/>
                   <button class="play-btn" aria-label="Play video ngắn"></button>
-                  <iframe data-src="" src="" allow="autoplay; encrypted-media" allowfullscreen title="Quy trình sản xuất"></iframe>
+                  <iframe src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 </div>
               </div>
             </div>
@@ -208,66 +118,55 @@
       </div>
     </section>
 
-    <!-- Video chi tiết quy trình -->
+    <!-- Video chi tiết -->
     <section id="video-quy-trinh" class="bg-white p-6 sm:p-8 rounded-lg shadow mb-6">
       <h3 class="text-xl sm:text-2xl font-semibold mb-4 text-center">Video chi tiết quy trình sản xuất</h3>
-
       <div class="space-y-5">
-        <!-- Repeatable video item -->
-        <template id="video-item-tpl">
-          <div>
-            <h4 class="font-semibold mb-2">Máy ép chén cao su</h4>
-            <div class="video-block not-playing" data-video-id="1Ktb6tdY181jBnAWZ6QPYYVYQ6IT5wZ0f">
-              <div class="video-inner">
-                <img class="video-poster" src="images/page/abou/may/mayEpChen.jpg" alt="Máy ép chén poster" loading="lazy"/>
-                <button class="play-btn" aria-label="Play Máy ép chén"></button>
-                <iframe data-src="" src="" allow="autoplay; encrypted-media" allowfullscreen title="Máy ép chén"></iframe>
-              </div>
-            </div>
-          </div>
-        </template>
 
-        <!-- Instances -->
+        <!-- VIDEO 2: Máy ép chén -->
         <div>
           <h4 class="font-semibold mb-2">Máy ép chén cao su</h4>
-          <div class="video-block not-playing" data-video-id="1Ktb6tdY181jBnAWZ6QPYYVYQ6IT5wZ0f">
+          <div class="video-block not-playing" data-video-id="9QxWV1E77is" data-youtube>
             <div class="video-inner">
-              <img class="video-poster" src="images/page/abou/may/mayEpChen.jpg" alt="Máy ép chén poster" loading="lazy"/>
-              <button class="play-btn" aria-label="Play Máy ép chén"></button>
-              <iframe data-src="" src="" allow="autoplay; encrypted-media" allowfullscreen title="Máy ép chén"></iframe>
+              <img class="video-poster" data-poster-yt src="images/page/abou/may/mayEpChen.jpg" alt="Poster" loading="lazy"/>
+              <button class="play-btn" aria-label="Play"></button>
+              <iframe src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
           </div>
         </div>
 
+        <!-- VIDEO 3: Máy dập -->
         <div>
           <h4 class="font-semibold mb-2">Máy dập cao su</h4>
-          <div class="video-block not-playing" data-video-id="1vijQ4zDd0f-0Iww4rP1TOw6CJbYjFSAI">
+          <div class="video-block not-playing" data-video-id="9Hae-M9pJZE" data-youtube>
             <div class="video-inner">
-              <img class="video-poster" src="images/page/abou/may/mayDap.jpg" alt="Máy dập poster" loading="lazy"/>
-              <button class="play-btn" aria-label="Play Máy dập"></button>
-              <iframe data-src="" src="" allow="autoplay; encrypted-media" allowfullscreen title="Máy dập"></iframe>
+              <img class="video-poster" data-poster-yt src="images/page/abou/may/mayEpChen.jpg" alt="Poster" loading="lazy"/>
+              <button class="play-btn" aria-label="Play"></button>
+              <iframe src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
           </div>
         </div>
 
+        <!-- VIDEO 4: Máy cuộn -->
         <div>
           <h4 class="font-semibold mb-2">Máy cuộn cao su</h4>
-          <div class="video-block not-playing" data-video-id="1i5LGkNMHQsaUU-yR30xvBoeVVpR9-JRk">
+          <div class="video-block not-playing" data-video-id="rAyHbNkHD7I" data-youtube>
             <div class="video-inner">
-              <img class="video-poster" src="images/page/abou/may/mayCuon.jpg" alt="Máy cuộn poster" loading="lazy"/>
-              <button class="play-btn" aria-label="Play Máy cuộn"></button>
-              <iframe data-src="" src="" allow="autoplay; encrypted-media" allowfullscreen title="Máy cuộn"></iframe>
+              <img class="video-poster" data-poster-yt src="images/page/abou/may/mayCuon.jpg" alt="Poster" loading="lazy"/>
+              <button class="play-btn" aria-label="Play"></button>
+              <iframe src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
           </div>
         </div>
 
+        <!-- VIDEO 5: Đóng gói -->
         <div>
           <h4 class="font-semibold mb-2">Sản xuất &amp; đóng gói</h4>
-          <div class="video-block not-playing" data-video-id="1ApmG5KxHA2Tw5sZLPCtEpwh____aGEhC">
+          <div class="video-block not-playing" data-video-id="8OxbEvEaxHM" data-youtube>
             <div class="video-inner">
-              <img class="video-poster" src="images/page/abou/may/dongGoi.jpg" alt="Xưởng poster" loading="lazy"/>
-              <button class="play-btn" aria-label="Play Xưởng"></button>
-              <iframe data-src="" src="" allow="autoplay; encrypted-media" allowfullscreen title="Xưởng"></iframe>
+              <img class="video-poster" data-poster-yt src="images/page/abou/may/dongGoi.jpg" alt="Poster" loading="lazy"/>
+              <button class="play-btn" aria-label="Play"></button>
+              <iframe src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
           </div>
         </div>
@@ -275,7 +174,7 @@
       </div>
     </section>
 
-    <!-- CTA Section -->
+    <!-- CTA -->
     <section class="bg-white p-4 sm:p-6 rounded-lg shadow text-center">
       <div class="max-w-xl mx-auto">
         <h3 class="text-lg sm:text-xl font-semibold mb-2">Bạn cần báo giá số lượng lớn?</h3>
@@ -286,84 +185,48 @@
         </div>
       </div>
     </section>
-
   </main>
 
-  <!-- Footer include -->
   <div id="site-footer" data-include="/footer.html">
     <footer class="bg-white text-center p-4 mt-8 border-t">
       <div class="text-sm text-gray-600">© <span id="year">2025</span> Công ty TNHH Phong Hòa Phát</div>
     </footer>
   </div>
 
-  <!-- Image Lightbox -->
+  <!-- Lightbox -->
   <div id="img-lightbox" class="img-lightbox" role="dialog" aria-modal="true" aria-hidden="true">
-    <button class="close-btn" aria-label="Đóng">✕</button>
+    <button class="close-btn" aria-label="Đóng">X</button>
     <img src="" alt=""/>
   </div>
 
 <script>
 (function(){
-  // Set year
-  const yearEl = document.getElementById('year');
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Include header/footer (if server-side include isn't available, this fetch will gracefully fail)
+  // Include header/footer
   document.querySelectorAll('[data-include]').forEach(el => {
     const url = el.getAttribute('data-include');
-    if (!url) return;
-    fetch(url).then(r => r.ok ? r.text() : '').then(html => { if (html) el.innerHTML = html; }).catch(() => {});
+    if (url) fetch(url).then(r => r.ok ? r.text() : '').then(html => { if (html) el.innerHTML = html; }).catch(() => {});
   });
 
-  // Image lightbox
+  // Lightbox
   const lightbox = document.getElementById('img-lightbox');
-  const lightboxImg = lightbox ? lightbox.querySelector('img') : null;
-  const lightboxClose = lightbox ? lightbox.querySelector('.close-btn') : null;
-
+  const lightboxImg = lightbox?.querySelector('img');
+  const lightboxClose = lightbox?.querySelector('.close-btn');
   document.querySelectorAll('img[data-lightbox]').forEach(img => {
     img.addEventListener('click', () => {
-      if (lightbox && lightboxImg) {
-        lightboxImg.src = img.src;
-        lightboxImg.alt = img.alt || '';
-        lightbox.setAttribute('aria-hidden', 'false');
-        lightbox.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      }
+      lightboxImg.src = img.src; lightboxImg.alt = img.alt || '';
+      lightbox.setAttribute('aria-hidden', 'false'); lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
     });
   });
+  lightboxClose?.addEventListener('click', () => { lightbox.classList.remove('active'); lightbox.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; });
+  lightbox?.addEventListener('click', e => { if (e.target === lightbox) { lightbox.classList.remove('active'); lightbox.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; } });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && lightbox?.classList.contains('active')) { lightbox.classList.remove('active'); lightbox.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; } });
 
-  if (lightboxClose) {
-    lightboxClose.addEventListener('click', () => {
-      if (lightbox) {
-        lightbox.classList.remove('active');
-        lightbox.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-      }
-    });
-  }
-
-  if (lightbox) {
-    lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox) {
-        lightbox.classList.remove('active');
-        lightbox.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-      }
-    });
-  }
-
-  // ESC key to close lightbox
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && lightbox && lightbox.classList.contains('active')) {
-      lightbox.classList.remove('active');
-      lightbox.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-    }
-  });
-
-  // Video inline play with lazy-loading
-  function initVideos(root=document) {
-    root.querySelectorAll('.video-block').forEach(container => {
+  // VIDEO: SẠCH HOÀN TOÀN
+  function initVideos() {
+    document.querySelectorAll('.video-block').forEach(container => {
       if (container.dataset.initialized) return;
       container.dataset.initialized = '1';
 
@@ -371,45 +234,35 @@
       const iframe = container.querySelector('iframe');
       const posterImg = container.querySelector('.video-poster');
       const videoId = container.getAttribute('data-video-id');
+      const isYoutube = container.hasAttribute('data-youtube');
 
-      // Build drive preview url only on demand
-      const buildSrc = id => `https://drive.google.com/file/d/${id}/preview`;
+      // Cập nhật poster từ YouTube
+      if (isYoutube && videoId && posterImg?.hasAttribute('data-poster-yt')) {
+        posterImg.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+      }
 
       const handlePlay = () => {
-        if (iframe && !iframe.src) {
-          iframe.src = buildSrc(videoId);
+        if (isYoutube && videoId) {
+          iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&rel=0&modestbranding=1&iv_load_policy=3&fs=0&cc_load_policy=0&showinfo=0&playlist=${videoId}&loop=0`;
         }
         container.classList.remove('not-playing');
         container.classList.add('playing');
-        // bring into view
         setTimeout(() => container.scrollIntoView({ behavior: 'smooth', block: 'center' }), 120);
       };
 
-      if (playBtn) playBtn.addEventListener('click', handlePlay);
-      if (posterImg) posterImg.addEventListener('click', handlePlay);
-
-      // Improve performance: if element enters viewport and not played, preload poster heavier images (optional)
-      if ('IntersectionObserver' in window) {
-        const io = new IntersectionObserver((entries, obs) => {
-          entries.forEach(en => {
-            if (en.isIntersecting) {
-              // nothing heavy to do now, but could lazy-load data-src if provided
-              obs.unobserve(en.target);
-            }
-          });
-        }, { rootMargin: '200px' });
-        io.observe(container);
-      }
+      playBtn?.addEventListener('click', handlePlay);
+      posterImg?.addEventListener('click', handlePlay);
     });
   }
   initVideos();
 
-  // Make video blocks keyboard accessible
-  document.querySelectorAll('.video-block .play-btn').forEach(btn => { btn.setAttribute('role','button'); btn.tabIndex = 0; btn.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); } }); });
+  // Keyboard
+  document.querySelectorAll('.video-block .play-btn').forEach(btn => {
+    btn.setAttribute('role', 'button'); btn.tabIndex = 0;
+    btn.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); } });
+  });
 
 })();
 </script>
-<script src="js/main.js"></script>
-
 </body>
 </html>
