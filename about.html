@@ -24,7 +24,7 @@
     .video-inner { position: relative; padding-top: 56.25%; }
     .video-inner iframe, .video-inner img { position: absolute; top:0; left:0; width:100%; height:100%; }
 
-    /* ẨN HOÀN TOÀN KHI CHẠY */
+    /* Play/Poster visibility states */
     .video-block.not-playing .video-poster,
     .video-block.not-playing .play-btn { display: block; }
     .video-block.playing .video-poster,
@@ -38,19 +38,59 @@
     .video-block .play-btn {
       position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
       width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,0.95);
-      display: flex; align-items: center; justify-content: center; z-index: 10; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; z-index: 15; cursor: pointer;
       box-shadow: 0 4px 12px rgba(0,0,0,0.18); transition: transform 0.16s ease;
     }
     .video-block .play-btn::after { content: ''; display: inline-block; width: 0; height: 0; border-left: 14px solid #059669; border-top: 9px solid transparent; border-bottom: 9px solid transparent; margin-left: 6px; }
 
-    /* ẨN UI YOUTUBE */
-    .video-inner iframe { pointer-events: none; }
+    /* iframe pointer events - only enable when playing */
+    .video-inner iframe { pointer-events: none; border: 0; }
     .video-block.playing .video-inner iframe { pointer-events: auto; }
+
+    /* Cover to hide potential YouTube channel/title area (non-interactive) */
+    .video-inner .yt-brand-cover {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 36%;
+      height: 14%;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(0,0,0,0.0), rgba(255,255,255,0.02));
+      z-index: 12;
+      border-bottom-right-radius: 8px;
+      mix-blend-mode: normal;
+    }
+
+    /* Fullscreen button */
+    .video-inner .fs-btn {
+      position: absolute;
+      right: 8px;
+      bottom: 8px;
+      z-index: 20;
+      width: 38px;
+      height: 38px;
+      border-radius: 6px;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+      transition: background 0.12s ease;
+      color: #fff;
+      font-size: 16px;
+    }
+    .video-inner .fs-btn:hover { background: rgba(0,0,0,0.65); }
+
+    /* ensure poster + play are above cover */
+    .video-inner .video-poster,
+    .video-inner .play-btn { z-index: 15; position: absolute; }
 
     @media (max-width: 640px) {
       .step-num { width: 44px; height:44px; font-size:16px; }
       .video-block .play-btn { width:72px; height:72px; }
       main { padding-left: 16px; padding-right: 16px; }
+      .video-inner .fs-btn { right: 6px; bottom: 6px; width: 46px; height: 46px; }
     }
     a, button { touch-action: manipulation; }
     .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
@@ -100,11 +140,14 @@
             <p class="text-sm text-gray-700 font-medium mb-3">Xem video ngắn về quy trình sản xuất của chúng tôi:</p>
             <div class="rounded-lg overflow-hidden border">
               <!-- VIDEO 1: Tổng quan -->
-              <div class="video-block not-playing" data-video-id="NNivheW6Qiw" data-youtube>
+              <div class="video-block not-playing" data-video-id="NNivheW6Qiw" data-youtube data-poster-custom="images/page/abou/dongGoi.jpg">
                 <div class="video-inner">
-                  <img class="video-poster" data-poster-yt src="images/page/abou/dongGoi.jpg" alt="Poster" loading="lazy"/>
+                  <div class="yt-brand-cover" aria-hidden="true"></div>
+                  <img class="video-poster" loading="lazy" alt="Poster"/>
                   <button class="play-btn" aria-label="Play video ngắn"></button>
-                  <iframe src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                  <!-- fullscreen button (JS sẽ thêm icon/text) -->
+                  <button class="fs-btn" aria-label="Toàn màn hình" title="Toàn màn hình" style="display:none">⤢</button>
+                  <iframe src="" title="Video quy trình sản xuất" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
                 </div>
               </div>
             </div>
@@ -126,11 +169,13 @@
         <!-- VIDEO 2: Máy ép chén -->
         <div>
           <h4 class="font-semibold mb-2">Máy ép chén cao su</h4>
-          <div class="video-block not-playing" data-video-id="9QxWV1E77is" data-youtube>
+          <div class="video-block not-playing" data-video-id="9QxWV1E77is" data-youtube data-poster-custom="images/page/abou/may/mayEpChen.jpg">
             <div class="video-inner">
-              <img class="video-poster" data-poster-yt src="images/page/abou/may/mayEpChen.jpg" alt="Poster" loading="lazy"/>
+              <div class="yt-brand-cover" aria-hidden="true"></div>
+              <img class="video-poster" loading="lazy" alt="Poster"/>
               <button class="play-btn" aria-label="Play"></button>
-              <iframe src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+              <button class="fs-btn" aria-label="Toàn màn hình" title="Toàn màn hình" style="display:none">⤢</button>
+              <iframe src="" title="Máy ép chén" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
           </div>
         </div>
@@ -138,11 +183,13 @@
         <!-- VIDEO 3: Máy dập -->
         <div>
           <h4 class="font-semibold mb-2">Máy dập cao su</h4>
-          <div class="video-block not-playing" data-video-id="9Hae-M9pJZE" data-youtube>
+          <div class="video-block not-playing" data-video-id="9Hae-M9pJZE" data-youtube data-poster-custom="images/page/abou/may/mayEpChen.jpg">
             <div class="video-inner">
-              <img class="video-poster" data-poster-yt src="images/page/abou/may/mayEpChen.jpg" alt="Poster" loading="lazy"/>
+              <div class="yt-brand-cover" aria-hidden="true"></div>
+              <img class="video-poster" loading="lazy" alt="Poster"/>
               <button class="play-btn" aria-label="Play"></button>
-              <iframe src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+              <button class="fs-btn" aria-label="Toàn màn hình" title="Toàn màn hình" style="display:none">⤢</button>
+              <iframe src="" title="Máy dập" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
           </div>
         </div>
@@ -150,11 +197,13 @@
         <!-- VIDEO 4: Máy cuộn -->
         <div>
           <h4 class="font-semibold mb-2">Máy cuộn cao su</h4>
-          <div class="video-block not-playing" data-video-id="rAyHbNkHD7I" data-youtube>
+          <div class="video-block not-playing" data-video-id="rAyHbNkHD7I" data-youtube data-poster-custom="images/page/abou/may/mayCuon.jpg">
             <div class="video-inner">
-              <img class="video-poster" data-poster-yt src="images/page/abou/may/mayCuon.jpg" alt="Poster" loading="lazy"/>
+              <div class="yt-brand-cover" aria-hidden="true"></div>
+              <img class="video-poster" loading="lazy" alt="Poster"/>
               <button class="play-btn" aria-label="Play"></button>
-              <iframe src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+              <button class="fs-btn" aria-label="Toàn màn hình" title="Toàn màn hình" style="display:none">⤢</button>
+              <iframe src="" title="Máy cuộn" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
           </div>
         </div>
@@ -162,11 +211,13 @@
         <!-- VIDEO 5: Đóng gói -->
         <div>
           <h4 class="font-semibold mb-2">Sản xuất &amp; đóng gói</h4>
-          <div class="video-block not-playing" data-video-id="8OxbEvEaxHM" data-youtube>
+          <div class="video-block not-playing" data-video-id="8OxbEvEaxHM" data-youtube data-poster-custom="images/page/abou/may/dongGoi.jpg">
             <div class="video-inner">
-              <img class="video-poster" data-poster-yt src="images/page/abou/may/dongGoi.jpg" alt="Poster" loading="lazy"/>
+              <div class="yt-brand-cover" aria-hidden="true"></div>
+              <img class="video-poster" loading="lazy" alt="Poster"/>
               <button class="play-btn" aria-label="Play"></button>
-              <iframe src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+              <button class="fs-btn" aria-label="Toàn màn hình" title="Toàn màn hình" style="display:none">⤢</button>
+              <iframe src="" title="Đóng gói" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
           </div>
         </div>
@@ -224,7 +275,24 @@
   lightbox?.addEventListener('click', e => { if (e.target === lightbox) { lightbox.classList.remove('active'); lightbox.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; } });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && lightbox?.classList.contains('active')) { lightbox.classList.remove('active'); lightbox.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; } });
 
-  // VIDEO: SẠCH HOÀN TOÀN
+  // VIDEO: lazy load + autoplay on first click + fullscreen button
+  function buildYoutubeSrc(id) {
+    // show controls so user can pause/seek; fs=1 enables fullscreen; playsinline helpful on mobile
+    const params = new URLSearchParams({
+      autoplay: '1',
+      controls: '1',
+      fs: '1',
+      modestbranding: '1',
+      rel: '0',
+      iv_load_policy: '3',
+      playsinline: '1',
+      enablejsapi: '1',
+      // origin param can be added for enablejsapi but not required here
+    });
+    // use youtube-nocookie domain optionally: https://www.youtube-nocookie.com/embed/
+    return `https://www.youtube.com/embed/${id}?${params.toString()}`;
+  }
+
   function initVideos() {
     document.querySelectorAll('.video-block').forEach(container => {
       if (container.dataset.initialized) return;
@@ -233,34 +301,88 @@
       const playBtn = container.querySelector('.play-btn');
       const iframe = container.querySelector('iframe');
       const posterImg = container.querySelector('.video-poster');
+      const fsBtn = container.querySelector('.fs-btn');
+      const videoInner = container.querySelector('.video-inner');
       const videoId = container.getAttribute('data-video-id');
       const isYoutube = container.hasAttribute('data-youtube');
 
-      // Cập nhật poster từ YouTube
-      if (isYoutube && videoId && posterImg?.hasAttribute('data-poster-yt')) {
+      // choose poster: prefer data-poster-custom (hosted on site)
+      const customPoster = container.getAttribute('data-poster-custom');
+      if (customPoster) {
+        posterImg.src = customPoster;
+      } else if (isYoutube && videoId && posterImg?.hasAttribute('data-poster-yt')) {
         posterImg.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
       }
 
+      // show/hide fsBtn depending on capability; we show it after playing
+      if (fsBtn) fsBtn.style.display = 'none';
+
       const handlePlay = () => {
         if (isYoutube && videoId) {
-          iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&rel=0&modestbranding=1&iv_load_policy=3&fs=0&cc_load_policy=0&showinfo=0&playlist=${videoId}&loop=0`;
+          // set iframe src once so it autoplays
+          iframe.src = buildYoutubeSrc(videoId);
         }
+        // mark playing state
         container.classList.remove('not-playing');
         container.classList.add('playing');
+
+        // enable pointer events on iframe via CSS class change (handled by CSS)
+        // show fs button
+        if (fsBtn) fsBtn.style.display = 'flex';
+
+        // scroll slightly into view
         setTimeout(() => container.scrollIntoView({ behavior: 'smooth', block: 'center' }), 120);
       };
 
-      playBtn?.addEventListener('click', handlePlay);
+      // Accessibility: click poster or play button to start
       posterImg?.addEventListener('click', handlePlay);
+      playBtn?.addEventListener('click', handlePlay);
+
+      // Also start playback if user clicks anywhere in the container (optional)
+      container.addEventListener('click', e => {
+        // avoid double-handling when clicking fsBtn or controls
+        if (e.target === fsBtn || e.target.closest('.fs-btn')) return;
+        // only react when not yet playing
+        if (container.classList.contains('not-playing')) {
+          handlePlay();
+        }
+      });
+
+      // Fullscreen button behavior
+      if (fsBtn) {
+        fsBtn.addEventListener('click', e => {
+          e.stopPropagation(); // prevent triggering play toggle
+          // prefer requestFullscreen on the iframe element to show just the player
+          const elToFullscreen = iframe || videoInner || container;
+          if (!elToFullscreen) return;
+          // modern API
+          if (elToFullscreen.requestFullscreen) {
+            elToFullscreen.requestFullscreen().catch(() => {
+              // fallback to container if iframe fails
+              if (container.requestFullscreen) container.requestFullscreen().catch(()=>{});
+            });
+          } else if (elToFullscreen.webkitRequestFullscreen) {
+            elToFullscreen.webkitRequestFullscreen();
+          } else if (elToFullscreen.msRequestFullscreen) {
+            elToFullscreen.msRequestFullscreen();
+          }
+        });
+      }
+
+      // allow keyboard activation for play button
+      if (playBtn) {
+        playBtn.setAttribute('role', 'button');
+        playBtn.tabIndex = 0;
+        playBtn.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); playBtn.click(); } });
+      }
+
     });
   }
+
+  // Initialize now
   initVideos();
 
-  // Keyboard
-  document.querySelectorAll('.video-block .play-btn').forEach(btn => {
-    btn.setAttribute('role', 'button'); btn.tabIndex = 0;
-    btn.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); } });
-  });
+  // If you dynamically add more .video-block later, call initVideos() again.
 
 })();
 </script>
