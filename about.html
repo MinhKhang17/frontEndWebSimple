@@ -65,7 +65,8 @@
       border-radius: 8px;
       overflow: hidden;
       border: 1px solid #e5e7eb;
-      min-height: 120px;
+      /* remove fixed min-height so the intrinsic ratio controls height on small screens */
+      min-height: 0;
     }
     /* Use intrinsic ratio for responsiveness */
     .video-inner { position: relative; padding-top: 56.25%; }
