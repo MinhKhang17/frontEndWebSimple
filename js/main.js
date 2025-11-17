@@ -201,3 +201,80 @@ document.addEventListener('DOMContentLoaded', function() {
     if (a) prefetch(a.href);
   }, { passive: true });
 });
+// js/main.js — ensure favicon across the site
+(function ensureFavicon() {
+  const faviconConfig = {
+    version: 'v1', // tăng chuỗi này khi cập nhật favicon để cache-bust
+    root: '/images/page/logo', // chỉnh nếu đường dẫn khác
+    files: {
+      ico: '/favicon.ico', // thường đặt ở root
+      png32: '/favicon-32.png',
+      png96: '/favicon-96x96.png',
+      svg: '/favicon.svg',
+      apple: '/apple-touch-icon.png',
+      manifest: '/site.webmanifest'
+    }
+  };
+
+  // helper: create or replace a link rel=... element
+  function upsertLink(rel, href, type, sizes) {
+    // remove existing matching rel/type/sizes to avoid duplicates
+    const selectorParts = [`link[rel="${rel}"]`];
+    if (type) selectorParts.push(`[type="${type}"]`);
+    if (sizes) selectorParts.push(`[sizes="${sizes}"]`);
+    const selector = selectorParts.join('');
+    document.querySelectorAll(selector).forEach(n => n.remove());
+
+    const link = document.createElement('link');
+    link.rel = rel;
+    if (type) link.type = type;
+    if (sizes) link.sizes = sizes;
+
+    // cache-bust param
+    const sep = (href.indexOf('?') === -1) ? '?' : '&';
+    link.href = href + (faviconConfig.version ? sep + 'v=' + faviconConfig.version : '');
+    document.head.appendChild(link);
+    return link;
+  }
+
+  // wait until head exists
+  if (!document.head) {
+    document.addEventListener('DOMContentLoaded', () => ensureFavicon()); // retry
+    return;
+  }
+
+  try {
+    // Prefer placing /favicon.ico at root (browsers may auto-load it anyway)
+    if (faviconConfig.files.ico) {
+      upsertLink('shortcut icon', faviconConfig.files.ico);
+      upsertLink('icon', faviconConfig.files.ico, 'image/x-icon');
+    }
+
+    if (faviconConfig.files.png32) {
+      upsertLink('icon', faviconConfig.root + faviconConfig.files.png32, 'image/png', '32x32');
+    }
+
+    if (faviconConfig.files.png96) {
+      upsertLink('icon', faviconConfig.root + faviconConfig.files.png96, 'image/png', '96x96');
+    }
+
+    if (faviconConfig.files.svg) {
+      upsertLink('icon', faviconConfig.root + faviconConfig.files.svg, 'image/svg+xml');
+    }
+
+    if (faviconConfig.files.apple) {
+      upsertLink('apple-touch-icon', faviconConfig.root + faviconConfig.files.apple, null, '180x180');
+    }
+
+    if (faviconConfig.files.manifest) {
+      // remove old manifest if any
+      document.querySelectorAll('link[rel="manifest"]').forEach(n => n.remove());
+      const m = document.createElement('link');
+      m.rel = 'manifest';
+      m.href = faviconConfig.root + faviconConfig.files.manifest + (faviconConfig.version ? '?v=' + faviconConfig.version : '');
+      document.head.appendChild(m);
+    }
+  } catch (e) {
+    console.error('ensureFavicon failed', e);
+  }
+})();
