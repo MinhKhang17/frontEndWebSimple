@@ -7,14 +7,23 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <title>Chi tiết sản phẩm - Phong Hòa Phát</title>
   <style>
-    body{font-family:'Roboto',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;}
-    .page-transition {
-      opacity: 0;
-      transition: opacity 0.3s ease-in-out;
+    body { font-family: 'Roboto', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; }
+    .page-transition { opacity: 0; transition: opacity 0.3s ease-in-out; }
+    .page-transition.loaded { opacity: 1; }
+
+    /* Lightbox */
+    .img-lightbox {
+      position: fixed; inset: 0; display: none; align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.92); z-index: 100; padding: 20px; cursor: zoom-out;
     }
-    .page-transition.loaded {
-      opacity: 1;
+    .img-lightbox.active { display: flex; }
+    .img-lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
+    .img-lightbox .close-btn {
+      position: absolute; top: 16px; right: 16px; width: 44px; height: 44px;
+      background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-weight: bold; color: #333; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
   </style>
 </head>
@@ -29,124 +38,143 @@
 
   <div id="productDetail"></div>
 
+  <!-- Template cho chi tiết sản phẩm -->
   <template id="productTemplate">
     <div class="grid md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
+      <!-- Cột trái: Hình ảnh + mô tả -->
       <div class="bg-white rounded-lg shadow overflow-hidden">
-        <div class="aspect-w-4 aspect-h-3">
+        <!-- Ảnh chính -->
+        <div class="aspect-w-4 aspect-h-3 bg-gray-100">
           <img src="" alt="" class="w-full h-full object-cover" id="productImage" loading="eager">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        </div>
+
+        <!-- Hình ảnh phụ (thêm vào đây) -->
+        <div class="p-4 border-t">
+          <p class="text-xs font-medium text-gray-600 mb-2">Hình ảnh thực tế:</p>
+          <div class="flex gap-2 overflow-x-auto pb-2 snap-x snap-mandatory" id="thumbnailGallery">
+            <!-- Sẽ được JS chèn ảnh phụ -->
           </div>
-          <div class="p-4 sm:p-6 md:p-8">
-            <div class="flex flex-wrap items-center gap-2 sm:gap-3 mb-4">
-              <h1 class="text-2xl sm:text-3xl font-bold" id="productName"></h1>
-              <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Mới</span>
-            </div>
-          
-            <div class="flex items-center gap-2 text-sm text-gray-600 mb-4">
-              <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+        </div>
+
+        <div class="p-4 sm:p-6 md:p-8">
+          <div class="flex flex-wrap items-center gap-2 sm:gap-3 mb-4">
+            <h1 class="text-2xl sm:text-3xl font-bold" id="productName"></h1>
+            <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Mới</span>
+          </div>
+        
+          <div class="flex items-center gap-2 text-sm text-gray-600 mb-4">
+            <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+            <span>Chất lượng cao</span>
+          </div>
+        
+          <p class="text-gray-600 text-lg leading-relaxed mb-6" id="productDescription"></p>
+        
+          <div class="bg-gray-50 p-6 rounded-lg mb-6">
+            <h3 class="font-semibold text-lg mb-4 flex items-center gap-2">
+              <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
               </svg>
-              <span>Chất lượng cao</span>
-            </div>
-          
-            <p class="text-gray-600 text-lg leading-relaxed mb-6" id="productDescription"></p>
-          
-            <div class="bg-gray-50 p-6 rounded-lg mb-6">
-              <h3 class="font-semibold text-lg mb-4 flex items-center gap-2">
-                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-                Đặc điểm nổi bật
-              </h3>
-              <ul class="space-y-3" id="productFeatures">
-              </ul>
-            </div>
-          
-            <div class="flex gap-4">
-              <a href="contact.html" id="requestQuoteBtn" class="flex-1 bg-green-600 text-white px-6 py-3 rounded-lg font-medium text-center hover:bg-green-700 transition-colors flex items-center justify-center gap-2">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                </svg>
-                Yêu cầu báo giá
-              </a>
-            </div>
+              Đặc điểm nổi bật
+            </h3>
+            <ul class="space-y-3" id="productFeatures"></ul>
+          </div>
+        
+          <div class="flex gap-4">
+            <a href="contact.html" id="requestQuoteBtn" class="flex-1 bg-green-600 text-white px-6 py-3 rounded-lg font-medium text-center hover:bg-green-700 transition-colors flex items-center justify-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+              Yêu cầu báo giá
+            </a>
+          </div>
         </div>
       </div>
+
+      <!-- Cột phải: Thông số + Quy trình -->
       <div class="space-y-6">
-          <div class="bg-white rounded-lg shadow-lg p-8">
-            <h2 class="text-xl font-semibold mb-6 flex items-center gap-2">
-              <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/>
-              </svg>
-              Thông số kỹ thuật
-            </h2>
-            <table class="w-full text-sm divide-y divide-gray-200">
+        <div class="bg-white rounded-lg shadow-lg p-8">
+          <h2 class="text-xl font-semibold mb-6 flex items-center gap-2">
+            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/>
+            </svg>
+            Thông số kỹ thuật
+          </h2>
+          <table class="w-full text-sm divide-y divide-gray-200">
             <tbody id="productSpecs"></tbody>
           </table>
         </div>
        
-          <!-- Quy trình sản xuất -->
-          <div id="productionProcess" class="bg-white rounded-lg shadow-lg p-8">
-            <h2 class="text-xl font-semibold mb-6 flex items-center gap-2">
-              <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18M3 17h18"/>
-              </svg>
-              Quy trình sản xuất
-            </h2>
-            <ol class="space-y-6 list-none">
-              <li class="flex items-start gap-4">
-                <div class="flex-shrink-0 mt-1">
-                  <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-semibold">1</div>
-                </div>
-                <div>
-                  <h3 class="font-medium">Chuẩn bị nguyên liệu</h3>
-                  <p class="text-sm text-gray-600">Lựa chọn cao su và vật tư đạt tiêu chuẩn, kiểm tra đầu vào theo quy định chất lượng.</p>
-                </div>
-              </li>
-              <li class="flex items-start gap-4">
-                <div class="flex-shrink-0 mt-1">
-                  <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-semibold">2</div>
-                </div>
-                <div>
-                  <h3 class="font-medium">Gia công & tạo hình</h3>
-                  <p class="text-sm text-gray-600">Cắt, ép khuôn hoặc đúc theo mẫu, sử dụng thiết bị gia công chính xác để đảm bảo kích thước.</p>
-                </div>
-              </li>
-              <li class="flex items-start gap-4">
-                <div class="flex-shrink-0 mt-1">
-                  <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-semibold">3</div>
-                </div>
-                <div>
-                  <h3 class="font-medium">Hoàn thiện & xử lý bề mặt</h3>
-                  <p class="text-sm text-gray-600">Xử lý bề mặt, cắt tỉa, kiểm tra bavia và hoàn thiện tạo độ bền và tính thẩm mỹ cho sản phẩm.</p>
-                </div>
-              </li>
-              <li class="flex items-start gap-4">
-                <div class="flex-shrink-0 mt-1">
-                  <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-semibold">4</div>
-                </div>
-                <div>
-                  <h3 class="font-medium">Kiểm tra chất lượng</h3>
-                  <p class="text-sm text-gray-600">Thực hiện các phép kiểm tra cơ lý và ngoại quan, kiểm định kích thước và độ bền theo tiêu chuẩn.</p>
-                </div>
-              </li>
-              <li class="flex items-start gap-4">
-                <div class="flex-shrink-0 mt-1">
-                  <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-semibold">5</div>
-                </div>
-                <div>
-                  <h3 class="font-medium">Đóng gói & giao hàng</h3>
-                  <p class="text-sm text-gray-600">Đóng gói theo đơn vị vận chuyển, gắn nhãn, và bàn giao cho đối tác vận chuyển để giao đến khách hàng.</p>
-                </div>
-              </li>
-            </ol>
-          </div>
+        <!-- Quy trình sản xuất -->
+        <div class="bg-white rounded-lg shadow-lg p-8">
+          <h2 class="text-xl font-semibold mb-6 flex items-center gap-2">
+            <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18M3 17h18"/>
+            </svg>
+            Quy trình sản xuất
+          </h2>
+          <ol class="space-y-6 list-none">
+            <li class="flex items-start gap-4">
+              <div class="flex-shrink-0 mt-1">
+                <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-semibold">1</div>
+              </div>
+              <div>
+                <h3 class="font-medium">Chuẩn bị nguyên liệu</h3>
+                <p class="text-sm text-gray-600">Lựa chọn cao su và vật tư đạt tiêu chuẩn, kiểm tra đầu vào theo quy định chất lượng.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-4">
+              <div class="flex-shrink-0 mt-1">
+                <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-semibold">2</div>
+              </div>
+              <div>
+                <h3 class="font-medium">Gia công & tạo hình</h3>
+                <p class="text-sm text-gray-600">Cắt, ép khuôn hoặc đúc theo mẫu, sử dụng thiết bị gia công chính xác để đảm bảo kích thước.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-4">
+              <div class="flex-shrink-0 mt-1">
+                <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-semibold">3</div>
+              </div>
+              <div>
+                <h3 class="font-medium">Hoàn thiện & xử lý bề mặt</h3>
+                <p class="text-sm text-gray-600">Xử lý bề mặt, cắt tỉa, kiểm tra bavia và hoàn thiện tạo độ bền và tính thẩm mỹ cho sản phẩm.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-4">
+              <div class="flex-shrink-0 mt-1">
+                <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-semibold">4</div>
+              </div>
+              <div>
+                <h3 class="font-medium">Kiểm tra chất lượng</h3>
+                <p class="text-sm text-gray-600">Thực hiện các phép kiểm tra cơ lý và ngoại quan, kiểm định kích thước và độ bền theo tiêu chuẩn.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-4">
+              <div class="flex-shrink-0 mt-1">
+                <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-semibold">5</div>
+              </div>
+              <div>
+                <h3 class="font-medium">Đóng gói & giao hàng</h3>
+                <p class="text-sm text-gray-600">Đóng gói theo đơn vị vận chuyển, gắn nhãn, và bàn giao cho đối tác vận chuyển để giao đến khách hàng.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
       </div>
     </div>
   </template>
 </main>
 
 <div id="site-footer"></div>
+
+<!-- Lightbox -->
+<div id="img-lightbox" class="img-lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+  <button class="close-btn" aria-label="Đóng">X</button>
+  <img src="" alt=""/>
+</div>
+
 <script src="js/main.js"></script>
 <script>
 const productData = {
@@ -154,12 +182,11 @@ const productData = {
     name: "Chén cao su hứng mủ",
     description: "Chén cao su dùng để hứng mủ, thiết kế đơn giản, bền, chịu nhiệt phù hợp khai thác mủ.",
     image: "images/product/chenMu/chenMu1.jpg",
-    // giữ 1-2 tính năng cơ bản (không bắt buộc)
-    features: [
-      "Độ bền cao",
-      "Chịu nhiệt tốt",
-      "Thiết kế tối ưu cho hứng mủ"
+    thumbnails: [
+      { src: "images/product/chenMu/chenMu1.jpg", alt: "Chén cao su - góc chính" },
+      { src: "images/product/chenMu/chenCaoSu2.jpg", alt: "Chén cao su - góc nghiêng" }
     ],
+    features: ["Độ bền cao", "Chịu nhiệt tốt", "Thiết kế tối ưu cho hứng mủ"],
     specs: {
       "Chất liệu": "Nhựa tổng hợp (dẻo)",
       "Dung tích": "1.5 L",
@@ -168,26 +195,24 @@ const productData = {
   },
 
   mangChanMua: {
-    name: "Máng chắn mưa PVC",
+    name: "Máng chắn mưa PE",
     description: "Máng chắn mưa làm từ PE, bảo vệ mủ khỏi nước mưa; có sẵn kích thước phổ thông hoặc đặt theo yêu cầu.",
     image: "images/product/mangChanMua/mangChanMuaNgang.jpg",
-    features: [
-      "Chống thấm nước",
-      "Dễ lắp đặt",
-      "Bền trong điều kiện thời tiết"
+    thumbnails: [
+      { src: "images/product/mangChanMua/mangChanMuaNgang.jpg", alt: "Máng chắn mưa - góc ngang" },
+      { src: "images/product/mangChanMua/mangChanMua.jpg", alt: "Máng chắn mưa - góc dọc" }
     ],
+    features: ["Chống thấm nước", "Dễ lắp đặt", "Bền trong điều kiện thời tiết"],
     specs: {
       "Chất liệu": "Nhựa PE",
-      "Kích thước chuẩn: ": "450 x 80 mm; 550 x 80 mm; 600 x 80 mm",
+      "Kích thước chuẩn:": "450 x 80 mm; 550 x 80 mm; 600 x 80 mm",
       "Dung sai": "±1 mm",
-        "Kích thước đặt theo yêu cầu": "Vui lòng liên hệ để được tư vấn chi tiết"
-      }
+      "Kích thước đặt theo yêu cầu": "Vui lòng liên hệ để được tư vấn chi tiết"
+    }
   }
 };
 
-// Add page transition effect
 document.addEventListener('DOMContentLoaded', () => {
-  // Add loaded class after a short delay
   setTimeout(() => {
     document.querySelector('.page-transition').classList.add('loaded');
   }, 100);
@@ -196,54 +221,91 @@ document.addEventListener('DOMContentLoaded', () => {
   const productId = urlParams.get('product');
   const product = productData[productId];
   
-  if (product) {
-    const template = document.getElementById('productTemplate');
-    const clone = template.content.cloneNode(true);
-    
-    // Fill in product details
-    clone.getElementById('productImage').src = product.image;
-    clone.getElementById('productImage').alt = product.name;
-    clone.getElementById('productName').textContent = product.name;
-    clone.getElementById('productDescription').textContent = product.description;
-    
-    // Fill features
-    const featuresList = clone.getElementById('productFeatures');
-    product.features.forEach(feature => {
-      const li = document.createElement('li');
-      li.className = 'flex items-center gap-2 text-gray-700';
-      li.innerHTML = `
-        <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-        </svg>
-        <span>${feature}</span>
-      `;
-      featuresList.appendChild(li);
-    });
-    
-    // Fill specs
-    const specsTable = clone.getElementById('productSpecs');
-    Object.entries(product.specs).forEach(([key, value]) => {
-      const row = document.createElement('tr');
-      row.className = 'hover:bg-gray-50';
-      row.innerHTML = `
-        <td class="py-3 font-medium">${key}</td>
-        <td class="py-3 text-gray-600">${value}</td>
-      `;
-      specsTable.appendChild(row);
-    });
-    
-    // Update request quote button href
-    const requestQuoteBtn = clone.getElementById('requestQuoteBtn');
-    requestQuoteBtn.href = `contact.html?product=${productId}`;
-    
-    document.getElementById('productDetail').appendChild(clone);
-    document.getElementById('productTitle').textContent = product.name;
-  } else {
-    // Redirect to products page if no product is selected
+  if (!product) {
     window.location.href = 'product.html';
+    return;
   }
+
+  const template = document.getElementById('productTemplate');
+  const clone = template.content.cloneNode(true);
+  
+  // Ảnh chính
+  const mainImg = clone.getElementById('productImage');
+  mainImg.src = product.image;
+  mainImg.alt = product.name;
+
+  // Tiêu đề
+  clone.getElementById('productName').textContent = product.name;
+  document.getElementById('productTitle').textContent = product.name;
+
+  // Mô tả
+  clone.getElementById('productDescription').textContent = product.description;
+
+  // Đặc điểm
+  const featuresList = clone.getElementById('productFeatures');
+  product.features.forEach(f => {
+    const li = document.createElement('li');
+    li.className = 'flex items-center gap-2 text-gray-700';
+    li.innerHTML = `<svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+    </svg><span>${f}</span>`;
+    featuresList.appendChild(li);
+  });
+
+  // Thông số
+  const specsTable = clone.getElementById('productSpecs');
+  Object.entries(product.specs).forEach(([key, value]) => {
+    const row = document.createElement('tr');
+    row.className = 'hover:bg-gray-50';
+    row.innerHTML = `<td class="py-3 font-medium">${key}</td><td class="py-3 text-gray-600">${value}</td>`;
+    specsTable.appendChild(row);
+  });
+
+  // Nút báo giá
+  clone.getElementById('requestQuoteBtn').href = `contact.html?product=${productId}`;
+
+  // === THÊM HÌNH ẢNH PHỤ ===
+  const gallery = clone.getElementById('thumbnailGallery');
+  product.thumbnails.forEach(thumb => {
+    const img = document.createElement('img');
+    img.src = thumb.src;
+    img.alt = thumb.alt;
+    img.className = "h-20 w-20 object-cover rounded cursor-pointer snap-center flex-shrink-0 border hover:border-green-500 transition";
+    img.dataset.lightbox = thumb.src;
+    gallery.appendChild(img);
+  });
+
+  document.getElementById('productDetail').appendChild(clone);
+
+  // === LIGHTBOX ===
+  const lightbox = document.getElementById('img-lightbox');
+  const lightboxImg = lightbox.querySelector('img');
+  const closeBtn = lightbox.querySelector('.close-btn');
+
+  document.querySelectorAll('img[data-lightbox]').forEach(img => {
+    img.addEventListener('click', function(e) {
+      e.stopPropagation();
+      lightboxImg.src = this.dataset.lightbox;
+      lightboxImg.alt = this.alt;
+      lightbox.classList.add('active');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  const closeLightbox = () => {
+    lightbox.classList.remove('active');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    lightboxImg.src = '';
+  };
+
+  closeBtn?.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
+  });
 });
 </script>
-
 </body>
 </html>

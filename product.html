@@ -7,7 +7,25 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>body{font-family:'Roboto',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;}</style>
+  <title>Sản phẩm - Phong Hòa Phát</title>
+  <style>
+    body { font-family: 'Roboto', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; }
+    .product-card { cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+    .product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.12); }
+
+    /* Lightbox */
+    .img-lightbox {
+      position: fixed; inset: 0; display: none; align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.92); z-index: 100; padding: 20px; cursor: zoom-out;
+    }
+    .img-lightbox.active { display: flex; }
+    .img-lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
+    .img-lightbox .close-btn {
+      position: absolute; top: 16px; right: 16px; width: 44px; height: 44px;
+      background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-weight: bold; color: #333; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+  </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 <div id="site-header"></div>
@@ -18,64 +36,136 @@
   </nav>
 
   <div class="grid sm:grid-cols-2 gap-6">
-    <!-- Chén cao su (simplified) -->
-    <article class="bg-white rounded-lg shadow product-card overflow-hidden" data-product="chenMu" role="article" aria-label="Chén cao su hứng mủ">
+
+    <!-- 1. Chén cao su (có ảnh phụ + nút dưới cùng) -->
+    <article class="bg-white rounded-lg shadow product-card overflow-hidden flex flex-col h-full" data-product="chenMu">
       <img src="images/product/chenMu/chenMu1.jpg" alt="Chén cao su hứng mủ" class="w-full h-56 object-cover"/>
-      <div class="p-5">
-        <h2 class="text-lg font-semibold mb-1">Chén cao su hứng mủ</h2>
-        <p class="text-sm text-gray-600 mb-3">Chén cao su dùng để hứng mủ, bền, chịu nhiệt.</p>
+      <div class="p-5 flex flex-col flex-grow">
+        <div class="flex-grow">
+          <h2 class="text-lg font-semibold mb-1">Chén cao su hứng mủ</h2>
+          <p class="text-sm text-gray-600 mb-3">Chén cao su dùng để hứng mủ, bền, chịu nhiệt.</p>
 
-        <ul class="text-sm text-gray-700 space-y-1 mb-4">
-          <li><strong>Chất liệu:</strong> Nhựa tổng hợp (dẻo)</li>
-          <li><strong>Dung tích:</strong> 1.5 L</li>
-          <li><strong>Màu sắc:</strong> Xám đen</li>
-        </ul>
+          <ul class="text-sm text-gray-700 space-y-1 mb-4">
+            <li><strong>Chất liệu:</strong> Nhựa tổng hợp (dẻo)</li>
+            <li><strong>Dung tích:</strong> 1.5 L</li>
+            <li><strong>Màu sắc:</strong> Xám đen</li>
+          </ul>
 
-        <div class="flex gap-3">
-          <a href="product-detail.html?product=chenMu" class="flex-1 bg-blue-600 text-white px-3 py-2 rounded text-center text-sm hover:bg-blue-700">Xem chi tiết</a>
-          <a href="contact.html?product=chenMu" class="flex-1 bg-green-600 text-white px-3 py-2 rounded text-center text-sm hover:bg-green-700">Yêu cầu báo giá</a>
+          <!-- Hình ảnh phụ -->
+          <div class="mb-4">
+            <p class="text-xs font-medium text-gray-600 mb-2">Hình ảnh thực tế:</p>
+            <div class="flex gap-2 overflow-x-auto pb-2 snap-x snap-mandatory">
+              <img src="images/product/chenMu/chenMu1.jpg" 
+                   alt="Chén cao su - góc chính" 
+                   class="h-20 w-20 object-cover rounded cursor-pointer snap-center flex-shrink-0 border hover:border-green-500 transition"
+                   data-lightbox="images/product/chenMu/chenMu1.jpg">
+              <img src="images/product/chenMu/chenCaoSu2.jpg" 
+                   alt="Chén cao su - góc nghiêng" 
+                   class="h-20 w-20 object-cover rounded cursor-pointer snap-center flex-shrink-0 border hover:border-green-500 transition"
+                   data-lightbox="images/product/chenMu/chenCaoSu2.jpg">
+            </div>
+          </div>
+        </div>
+
+        <!-- Nút luôn ở dưới cùng -->
+        <div class="flex gap-3 mt-auto">
+          <a href="product-detail.html?product=chenMu" class="flex-1 bg-blue-600 text-white px-3 py-2 rounded text-center text-sm hover:bg-blue-700 transition">Xem chi tiết</a>
+          <a href="contact.html?product=chenMu" class="flex-1 bg-green-600 text-white px-3 py-2 rounded text-center text-sm hover:bg-green-700 transition">Yêu cầu báo giá</a>
         </div>
       </div>
     </article>
 
-    <!-- Máng chắn mưa (simplified) -->
-    <article class="bg-white rounded-lg shadow product-card overflow-hidden" data-product="mangChanMua" role="article" aria-label="Máng chắn mưa PVC">
+    <!-- 2. Máng chắn mưa (có ảnh phụ + nút dưới cùng) -->
+    <article class="bg-white rounded-lg shadow product-card overflow-hidden flex flex-col h-full" data-product="mangChanMua">
       <img src="images/product/mangChanMua/mangChanMuaNgang.jpg" alt="Máng chắn mưa PVC" class="w-full h-56 object-cover"/>
-      <div class="p-5">
-        <h2 class="text-lg font-semibold mb-1">Máng chắn mưa PVC</h2>
-        <p class="text-sm text-gray-600 mb-3">Máng PVC/PE chống thấm, bảo vệ mủ trong mùa mưa.</p>
+      <div class="p-5 flex flex-col flex-grow">
+        <div class="flex-grow">
+          <h2 class="text-lg font-semibold mb-1">Máng chắn mưa PVC</h2>
+          <p class="text-sm text-gray-600 mb-3">Máng PVC/PE chống thấm, bảo vệ mủ trong mùa mưa.</p>
 
-        <ul class="text-sm text-gray-700 space-y-1 mb-4">
-          <li><strong>Chất liệu:</strong> Nhựa PE / PVC</li>
-          <li><strong>Kích thước chuẩn:</strong> 450 × 80 mm / 550 × 80 mm / 600 × 80 mm</li>
-          <li><strong>Dung sai:</strong> ±1 mm</li>
-          <li><strong>Kích thước theo yêu cầu</strong> Liên hệ với chúng tôi để đặt theo kích thước mong muốn của bạn</li>
-        </ul>
+          <ul class="text-sm text-gray-700 space-y-1 mb-4">
+            <li><strong>Chất liệu:</strong> Nhựa PE / PVC</li>
+            <li><strong>Kích thước chuẩn:</strong> 450 × 80 mm / 550 × 80 mm / 600 × 80 mm</li>
+            <li><strong>Dung sai:</strong> ±1 mm</li>
+            <li><strong>Kích thước theo yêu cầu</strong> Liên hệ để đặt theo kích thước mong muốn</li>
+          </ul>
 
-        <div class="flex gap-3">
-          <a href="product-detail.html?product=mangChanMua" class="flex-1 bg-blue-600 text-white px-3 py-2 rounded text-center text-sm hover:bg-blue-700">Xem chi tiết</a>
-          <a href="contact.html?product=mangChanMua" class="flex-1 bg-green-600 text-white px-3 py-2 rounded text-center text-sm hover:bg-green-700">Yêu cầu báo giá</a>
+          <!-- Hình ảnh phụ -->
+          <div class="mb-4">
+            <p class="text-xs font-medium text-gray-600 mb-2">Hình ảnh thực tế:</p>
+            <div class="flex gap-2 overflow-x-auto pb-2 snap-x snap-mandatory">
+              <img src="images/product/mangChanMua/mangChanMuaNgang.jpg" 
+                   alt="Máng chắn mưa - góc ngang" 
+                   class="h-20 w-20 object-cover rounded cursor-pointer snap-center flex-shrink-0 border hover:border-green-500 transition"
+                   data-lightbox="images/product/mangChanMua/mangChanMuaNgang.jpg">
+              <img src="images/product/mangChanMua/mangChanMua.jpg" 
+                   alt="Máng chắn mưa - góc dọc" 
+                   class="h-20 w-20 object-cover rounded cursor-pointer snap-center flex-shrink-0 border hover:border-green-500 transition"
+                   data-lightbox="images/product/mangChanMua/mangChanMua.jpg">
+            </div>
+          </div>
+        </div>
+
+        <!-- Nút luôn ở dưới cùng -->
+        <div class="flex gap-3 mt-auto">
+          <a href="product-detail.html?product=mangChanMua" class="flex-1 bg-blue-600 text-white px-3 py-2 rounded text-center text-sm hover:bg-blue-700 transition">Xem chi tiết</a>
+          <a href="contact.html?product=mangChanMua" class="flex-1 bg-green-600 text-white px-3 py-2 rounded text-center text-sm hover:bg-green-700 transition">Yêu cầu báo giá</a>
         </div>
       </div>
     </article>
+
   </div>
 </main>
 
 <div id="site-footer"></div>
 
+<!-- Lightbox -->
+<div id="img-lightbox" class="img-lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+  <button class="close-btn" aria-label="Đóng">X</button>
+  <img src="" alt=""/>
+</div>
+
 <script src="js/main.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Keep click-to-open-detail on card (but ignore clicks on links/buttons)
+  // Click card → chi tiết (trừ link, button, ảnh phụ)
   document.querySelectorAll('.product-card').forEach(card => {
     card.addEventListener('click', function(e) {
-      if (e.target.closest('a') || e.target.closest('button')) return;
+      if (e.target.closest('a') || e.target.closest('button') || e.target.closest('img[data-lightbox]')) return;
       const id = this.dataset.product;
       if (id) window.location.href = `product-detail.html?product=${id}`;
     });
   });
+
+  // Lightbox
+  const lightbox = document.getElementById('img-lightbox');
+  const lightboxImg = lightbox.querySelector('img');
+  const closeBtn = lightbox.querySelector('.close-btn');
+
+  document.querySelectorAll('img[data-lightbox]').forEach(img => {
+    img.addEventListener('click', function(e) {
+      e.stopPropagation();
+      lightboxImg.src = this.dataset.lightbox;
+      lightboxImg.alt = this.alt;
+      lightbox.classList.add('active');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  const closeLightbox = () => {
+    lightbox.classList.remove('active');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    lightboxImg.src = '';
+  };
+
+  closeBtn?.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
+  });
 });
 </script>
-
 </body>
 </html>
