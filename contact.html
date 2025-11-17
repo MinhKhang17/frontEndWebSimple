@@ -7,54 +7,80 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body { font-family: 'Roboto', system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
-    .contact-card { background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%); }
-    .contact-icon { width: 1.25rem; height: 1.25rem; }
+  <!-- Thay phần CSS trong <style> bằng đoạn này (hoặc thay thế chỉ .map-container) -->
+<style>
+  body { font-family: 'Roboto', system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+  .contact-card { background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%); }
+  .contact-icon { width: 1.25rem; height: 1.25rem; }
 
-    /* Bản đồ responsive - FIX MOBILE */
+  /* Bản đồ responsive - FIX MOBILE (CẬP NHẬT) */
+  .map-container {
+    position: relative;
+    width: 100%;
+    /* ưu tiên aspect-ratio hiện đại */
+    aspect-ratio: 16 / 9;
+    height: auto;              /* dùng aspect-ratio để đặt chiều cao */
+    min-height: 220px;         /* tránh bị quá thấp trên mobile */
+    overflow: hidden;
+    border-radius: 0.75rem;
+    box-shadow: 0 8px 24px rgba(15,23,42,0.08);
+    background: #f3f7fb;       /* dự phòng khi iframe load chậm */
+  }
+  /* Fallback cho trình duyệt không hỗ trợ aspect-ratio */
+  @supports not (aspect-ratio: 16/9) {
     .map-container {
-      position: relative;
-      width: 100%;
-      padding-bottom: 56.25%; /* 16:9 ratio */
+      padding-bottom: 56.25%; /* 16:9 ratio fallback */
       height: 0;
-      overflow: hidden;
-      border-radius: 0.75rem;
-      box-shadow: 0 8px 24px rgba(15,23,42,0.08);
     }
-    .map-container iframe {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100% !important;
-      height: 100% !important;
-      border: 0;
+    .map-container.fixed-desktop {
+      padding-bottom: 56.25%;
     }
+  }
 
-    @media (min-width: 768px) {
+  .map-container iframe {
+    position: absolute;
+    inset: 0; /* top:0; right:0; bottom:0; left:0; */
+    width: 100% !important;
+    height: 100% !important;
+    border: 0;
+    display: block;
+  }
+
+  @media (min-width: 768px) {
+    /* Trên desktop giữ chiều cao cố định như yêu cầu */
+    .map-container {
+      aspect-ratio: auto;
+      height: 480px;
+      min-height: 0;
+    }
+    /* Nếu cần override fallback padding-bottom */
+    @supports not (aspect-ratio: 16/9) {
       .map-container {
         padding-bottom: 0;
-        height: 480px; /* Chiều cao cố định trên desktop */
+        height: 480px;
       }
     }
+  }
 
-    /* Toast nhỏ */
-    .toast {
-      position: fixed;
-      right: 1rem;
-      bottom: 1rem;
-      background: rgba(17,24,39,0.95);
-      color: #fff;
-      padding: .5rem .75rem;
-      border-radius: .5rem;
-      font-size: .875rem;
-      transform: translateY(8px);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .18s ease, transform .18s ease;
-      z-index: 60;
-    }
-    .toast.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
-  </style>
+  /* Toast nhỏ */
+  .toast {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    background: rgba(17,24,39,0.95);
+    color: #fff;
+    padding: .5rem .75rem;
+    border-radius: .5rem;
+    font-size: .875rem;
+    transform: translateY(8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .18s ease, transform .18s ease;
+    z-index: 60;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+</style>
+
 </head>
 <body class="bg-gray-50 text-gray-800">
 <header id="site-header" data-include="/header.html"></header>
