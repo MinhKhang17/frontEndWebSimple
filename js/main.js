@@ -278,3 +278,10 @@ document.addEventListener('DOMContentLoaded', function() {
     console.error('ensureFavicon failed', e);
   }
 })();
+window.addEventListener("pageshow", (e) => {
+  if (e.persisted) {
+    document.querySelectorAll('link[href*="fonts.googleapis"]').forEach(link => {
+      link.href = link.href.split("?")[0] + "?r=" + Date.now();
+    });
+  }
+});
