@@ -13,7 +13,8 @@ export default function VideoInitializer() {
         playsinline: '1',
         enablejsapi: '1'
       });
-      return `https://www.youtube.com/embed/${id}?${params.toString()}`;
+      // Use privacy-enhanced domain and preserve parameters
+      return `https://www.youtube-nocookie.com/embed/${id}?${params.toString()}`;
     }
 
     const attached = [];
@@ -25,6 +26,8 @@ export default function VideoInitializer() {
 
         const playBtn = container.querySelector('.play-btn');
         const iframe = container.querySelector('iframe');
+        // prefer lazy loading for iframes to reduce initial payload
+        if (iframe) iframe.setAttribute('loading', 'lazy');
         const posterImg = container.querySelector('.video-poster');
         const fsBtn = container.querySelector('.fs-btn');
         const videoInner = container.querySelector('.video-inner');
