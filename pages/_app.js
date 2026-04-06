@@ -7,6 +7,10 @@ import VideoInitializer from '../components/VideoInitializer'
 
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://phonghoaphat.com';
+  const canonicalUrl = (typeof window === 'undefined')
+    ? siteUrl + (router.asPath || '/')
+    : siteUrl + (router.asPath || '/').split('?')[0];
 
   useEffect(() => {
     function handleRouteChange() {
@@ -98,10 +102,18 @@ export default function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
+        <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="Phong Hòa Phát - Vật tư & giải pháp khai thác mủ. Sản phẩm: chén cao su, máng chắn mưa và nhiều thiết bị khác." />
+        <meta name="robots" content="index,follow" />
         <meta property="og:site_name" content="Phong Hòa Phát" />
         <meta property="og:type" content="website" />
+        <meta property="og:title" content="Phong Hòa Phát — Vật tư ngành cao su" />
+        <meta property="og:description" content="Phong Hòa Phát - Vật tư & giải pháp khai thác mủ. Sản phẩm: chén cao su, máng chắn mưa và nhiều thiết bị khác." />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:image" content={`${siteUrl}/images/page/logo/favicon-96x96.png`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <link rel="canonical" href={canonicalUrl} />
         <link rel="icon" href="/images/page/logo/favicon-96x96.png" />
       </Head>
       <Script src="https://cdn.tailwindcss.com" strategy="beforeInteractive" />
