@@ -111,7 +111,90 @@ export default function About() {
           </div>
         </div>
 
-        {/* Additional sections (process videos etc.) can remain static as in original */}
+        {/* Video short + detailed process videos */}
+        <section className="bg-white p-4 sm:p-6 rounded-lg shadow mb-6">
+          <div className="max-w-xl mx-auto">
+            <div className="bg-gray-50 p-4 sm:p-5 rounded-lg border mb-4">
+              <p className="text-sm text-gray-700 font-medium mb-3">Xem video ngắn về quy trình sản xuất của chúng tôi:</p>
+              <div className="rounded-lg overflow-hidden border">
+                {/* VIDEO 1: Tổng quan */}
+                <div className="video-block not-playing" data-video-id="NNivheW6Qiw" data-youtube data-poster-custom="/images/page/abou/dongGoi.jpg">
+                  <div className="video-inner">
+                    <div className="yt-brand-cover" aria-hidden="true"></div>
+                    <img className="video-poster" loading="lazy" alt="Poster" />
+                    <button className="play-btn" aria-label="Play video ngắn"></button>
+                    <button className="fs-btn" aria-label="Toàn màn hình" title="Toàn màn hình" style={{display:'none'}}>⤢</button>
+                    <iframe src="" title="Video quy trình sản xuất" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowFullScreen></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Detailed videos */}
+            <section id="video-quy-trinh" className="bg-white p-6 sm:p-8 rounded-lg shadow mb-6">
+              <h3 className="text-xl sm:text-2xl font-semibold mb-4 text-center">Video chi tiết quy trình sản xuất</h3>
+              <div className="space-y-5">
+
+                {/* VIDEO 2: Máy ép chén */}
+                <div>
+                  <h4 className="font-semibold mb-2">Máy ép chén cao su</h4>
+                  <div className="video-block not-playing" data-video-id="9QxWV1E77is" data-youtube data-poster-custom="/images/page/abou/may/mayEpChen.jpg">
+                    <div className="video-inner">
+                      <div className="yt-brand-cover" aria-hidden="true"></div>
+                      <img className="video-poster" loading="lazy" alt="Poster" />
+                      <button className="play-btn" aria-label="Play"></button>
+                      <button className="fs-btn" aria-label="Toàn màn hình" title="Toàn màn hình" style={{display:'none'}}>⤢</button>
+                      <iframe src="" title="Máy ép chén" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowFullScreen></iframe>
+                    </div>
+                  </div>
+                </div>
+
+                {/* VIDEO 3: Máy dập */}
+                <div>
+                  <h4 className="font-semibold mb-2">Máy dập cao su</h4>
+                  <div className="video-block not-playing" data-video-id="9Hae-M9pJZE" data-youtube data-poster-custom="/images/page/abou/may/mayDap.jpg">
+                    <div className="video-inner">
+                      <div className="yt-brand-cover" aria-hidden="true"></div>
+                      <img className="video-poster" loading="lazy" alt="Poster" />
+                      <button className="play-btn" aria-label="Play"></button>
+                      <button className="fs-btn" aria-label="Toàn màn hình" title="Toàn màn hình" style={{display:'none'}}>⤢</button>
+                      <iframe src="" title="Máy dập" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowFullScreen></iframe>
+                    </div>
+                  </div>
+                </div>
+
+                {/* VIDEO 4: Máy cuộn */}
+                <div>
+                  <h4 className="font-semibold mb-2">Máy cuộn cao su</h4>
+                  <div className="video-block not-playing" data-video-id="rAyHbNkHD7I" data-youtube data-poster-custom="/images/page/abou/may/mayCuon.jpg">
+                    <div className="video-inner">
+                      <div className="yt-brand-cover" aria-hidden="true"></div>
+                      <img className="video-poster" loading="lazy" alt="Poster" />
+                      <button className="play-btn" aria-label="Play"></button>
+                      <button className="fs-btn" aria-label="Toàn màn hình" title="Toàn màn hình" style={{display:'none'}}>⤢</button>
+                      <iframe src="" title="Máy cuộn" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowFullScreen></iframe>
+                    </div>
+                  </div>
+                </div>
+
+                {/* VIDEO 5: Đóng gói */}
+                <div>
+                  <h4 className="font-semibold mb-2">Sản xuất &amp; đóng gói</h4>
+                  <div className="video-block not-playing" data-video-id="8OxbEvEaxHM" data-youtube data-poster-custom="/images/page/abou/may/dongGoi.jpg">
+                    <div className="video-inner">
+                      <div className="yt-brand-cover" aria-hidden="true"></div>
+                      <img className="video-poster" loading="lazy" alt="Poster" />
+                      <button className="play-btn" aria-label="Play"></button>
+                      <button className="fs-btn" aria-label="Toàn màn hình" title="Toàn màn hình" style={{display:'none'}}>⤢</button>
+                      <iframe src="" title="Đóng gói" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowFullScreen></iframe>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </section>
+          </div>
+        </section>
       </main>
 
       <Footer />
