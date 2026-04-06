@@ -1,95 +1,126 @@
 import Head from 'next/head'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import Link from 'next/link'
 
 export default function Home() {
   return (
     <>
       <Head>
-        <title>Sản phẩm vật tư khai thác mủ cao su — Phong Hòa Phát</title>
-        <meta name="description" content="Đồng hành cùng người nông dân — cung cấp vật tư, dụng cụ khai thác mủ cao su chất lượng, giao nhanh, giá hợp lý tại Việt Nam." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Phong Hòa Phát — Vật tư ngành cao su</title>
+        <meta name="description" content="Phong Hòa Phát cung cấp vật tư khai thác mủ: chén, máng chắn mưa, phụ kiện chuẩn chất lượng." />
       </Head>
 
       <Header />
 
-      <main className="max-w-6xl mx-auto px-4 py-8 sm:py-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Hero */}
-        <section className="rounded-lg overflow-hidden relative shadow-lg mb-10">
-          <a href="/product">
-            <img src="/images/page/page1.jpg" alt="Banner Phong Hòa Phát" className="w-full h-[280px] sm:h-[340px] md:h-[420px] object-cover" loading="eager" />
-          </a>
-          <div className="absolute inset-0 bg-gradient-to-r from-black/60 sm:from-black/50 to-transparent flex items-center">
-            <div className="px-6 sm:ml-8 max-w-xl text-white">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">Chất Lượng Tạo Nên Sự Bền Vững</h1>
-              <p className="text-base sm:text-lg opacity-95 mb-4">Phụ kiện cao su chất lượng cao - Đồng hành cùng sự phát triển của ngành cao su Việt Nam</p>
-              <a href="/product" className="inline-block bg-green-600 hover:bg-green-700 transition-colors px-6 py-3 rounded-lg text-white font-medium">Xem sản phẩm</a>
+        <section className="relative mt-8 rounded-xl overflow-hidden shadow-lg">
+          <div className="grid grid-cols-1 md:grid-cols-2">
+            <div className="p-8 md:p-12 flex flex-col justify-center bg-gradient-to-r from-green-700/90 to-green-600/80 text-white">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight mb-4">Giải pháp vật tư bền bỉ cho vườn cao su</h1>
+              <p className="text-base sm:text-lg opacity-95 mb-6">Sản phẩm của chúng tôi: chén hứng mủ, máng chắn mưa và phụ kiện hỗ trợ. Chất lượng kiểm định, giao nhanh, hỗ trợ kỹ thuật.</p>
+              <div className="flex gap-3 flex-wrap">
+                <Link href="/product"><a className="inline-block bg-white text-green-700 px-5 py-3 rounded-lg font-semibold shadow">Xem sản phẩm</a></Link>
+                <Link href="/contact"><a className="inline-block border border-white/30 text-white px-5 py-3 rounded-lg">Liên hệ báo giá</a></Link>
+              </div>
+            </div>
+            <div className="relative">
+              <img src="/images/page/page1.jpg" alt="Phong Hòa Phát - Banner" className="w-full h-80 md:h-full object-cover" loading="lazy" />
             </div>
           </div>
         </section>
 
-        {/* Intro */}
-        <section className="bg-white p-6 rounded-lg shadow mb-10">
-          <div className="md:flex md:items-center md:justify-between md:gap-8">
-            <div className="md:flex-1 mb-4 md:mb-0">
-              <h2 className="text-2xl font-semibold mb-2">Phong Hòa Phát — Vật tư ngành cao su</h2>
-              <p className="text-gray-600">Phong Hòa Phát chuyên sản xuất vật tư phục vụ khai thác mủ cao su: chén cao su, máng chắn mưa. Quy trình sản xuất hiện đại, tiêu chuẩn chất lượng và dịch vụ hậu mãi tận tâm.</p>
-            </div>
-            <div className="text-center md:text-right">
-              <a href="/contact" className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-5 py-3 rounded-lg font-medium transition-colors">0908 093 598</a>
-            </div>
+        {/* Why choose us */}
+        <section className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold mb-2">Sản phẩm đạt chuẩn</h3>
+            <p className="text-sm text-gray-600">Sản xuất theo quy trình kiểm soát chất lượng nghiêm ngặt, vật liệu bền, chịu nhiệt và an toàn.</p>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold mb-2">Giao hàng nhanh</h3>
+            <p className="text-sm text-gray-600">Hệ thống giao vận linh hoạt, phục vụ trên toàn quốc với thời gian nhanh chóng.</p>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold mb-2">Hỗ trợ kỹ thuật</h3>
+            <p className="text-sm text-gray-600">Tư vấn lắp đặt, chọn mã sản phẩm phù hợp, hỗ trợ sau bán hàng tận tâm.</p>
           </div>
         </section>
 
-        {/* Example products (simplified) */}
-        <section className="mb-10">
+        {/* Featured products */}
+        <section className="mt-10">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-2xl font-semibold">Sản phẩm tiêu biểu</h3>
-            <a href="/product" className="text-green-600 hover:text-green-700 font-medium text-sm">Xem tất cả →</a>
+            <h2 className="text-2xl font-semibold">Sản phẩm tiêu biểu</h2>
+            <Link href="/product"><a className="text-green-600 hover:text-green-700 font-medium">Xem tất cả →</a></Link>
           </div>
 
-          <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
-            <article className="bg-white rounded-lg shadow product-card overflow-hidden flex flex-col h-full">
-              <div className="grid md:grid-cols-5 gap-0 flex-grow">
-                <div className="md:col-span-2 relative overflow-hidden bg-gray-100">
-                  <a href="/product#chen-01" className="block h-full">
-                    <img src="/images/product/chenMu/chenMu1.jpg" alt="Chén cao su" className="w-full h-full object-contain md:object-cover min-h-[200px] md:min-h-0" />
-                  </a>
-                </div>
-                <div className="md:col-span-3 p-5 flex flex-col justify-between h-full">
-                  <div>
-                    <h4 className="text-lg font-semibold mb-1">Chén cao su chịu nhiệt</h4>
-                    <p className="text-sm text-gray-600 mb-4">Chén cao su chất lượng cao, chịu nhiệt tốt, dùng để hứng mủ cao su hiệu quả, bền bỉ.</p>
-                  </div>
-                  <div className="flex gap-2 mt-auto">
-                    <a href="/product#chen-01" className="flex-1 inline-flex justify-center items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded font-medium text-sm transition-colors">Chi tiết</a>
-                    <a href="/contact?product=chenMu" className="flex-1 inline-flex justify-center items-center px-4 py-2 border border-gray-300 hover:border-green-600 hover:text-green-600 rounded font-medium text-sm transition-colors">Báo giá</a>
-                  </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <article className="bg-white rounded-lg shadow overflow-hidden">
+              <Link href="/product#chen-01"><a className="block h-44 overflow-hidden bg-gray-50"><img src="/images/product/chenMu/chenMu1.jpg" alt="Chén cao su" className="w-full h-full object-contain md:object-cover" loading="lazy" /></a></Link>
+              <div className="p-4">
+                <h4 className="font-semibold mb-2">Chén hứng mủ</h4>
+                <p className="text-sm text-gray-600 mb-4">Chén cao su bền, thiết kế chuẩn giúp tối ưu lượng mủ hứng.</p>
+                <div className="flex gap-2">
+                  <Link href="/product#chen-01"><a className="flex-1 text-center bg-green-600 text-white px-3 py-2 rounded">Chi tiết</a></Link>
+                  <Link href="/contact?product=chenMu"><a className="flex-1 text-center border border-gray-300 px-3 py-2 rounded">Báo giá</a></Link>
                 </div>
               </div>
             </article>
 
-            <article className="bg-white rounded-lg shadow product-card overflow-hidden flex flex-col h-full">
-              <div className="grid md:grid-cols-5 gap-0 flex-grow">
-                <div className="md:col-span-2 relative overflow-hidden bg-gray-100">
-                  <a href="/product#mang-01" className="block h-full">
-                    <img src="/images/product/mangChanMua/mangChanMua.jpg" alt="Máng chắn mưa" className="w-full h-full object-contain md:object-cover min-h-[200px] md:min-h-0" />
-                  </a>
+            <article className="bg-white rounded-lg shadow overflow-hidden">
+              <Link href="/product#mang-01"><a className="block h-44 overflow-hidden bg-gray-50"><img src="/images/product/mangChanMua/mangChanMua.jpg" alt="Máng chắn mưa" className="w-full h-full object-contain md:object-cover" loading="lazy" /></a></Link>
+              <div className="p-4">
+                <h4 className="font-semibold mb-2">Máng chắn mưa</h4>
+                <p className="text-sm text-gray-600 mb-4">Bảo vệ mủ khỏi mưa, vật liệu PE bền, dễ lắp đặt.</p>
+                <div className="flex gap-2">
+                  <Link href="/product#mang-01"><a className="flex-1 text-center bg-green-600 text-white px-3 py-2 rounded">Chi tiết</a></Link>
+                  <Link href="/contact?product=mangChanMua"><a className="flex-1 text-center border border-gray-300 px-3 py-2 rounded">Báo giá</a></Link>
                 </div>
-                <div className="md:col-span-3 p-5 flex flex-col justify-between h-full">
-                  <div>
-                    <h4 className="text-lg font-semibold mb-1">Máng chắn mưa PE</h4>
-                    <p className="text-sm text-gray-600 mb-4">Máng nhựa PE nhẹ, bền, chống thấm tốt, bảo vệ mủ cao su trong mùa mưa hiệu quả.</p>
-                  </div>
-                  <div className="flex gap-2 mt-auto">
-                    <a href="/product#mang-01" className="flex-1 inline-flex justify-center items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded font-medium text-sm transition-colors">Chi tiết</a>
-                    <a href="/contact?product=mangChanMua" className="flex-1 inline-flex justify-center items-center px-4 py-2 border border-gray-300 hover:border-green-600 hover:text-green-600 rounded font-medium text-sm transition-colors">Báo giá</a>
-                  </div>
+              </div>
+            </article>
+
+            <article className="bg-white rounded-lg shadow overflow-hidden">
+              <a className="block h-44 overflow-hidden bg-gray-50" href="/product"><img src="/images/page/page2.jpg" alt="Phụ kiện" className="w-full h-full object-cover" loading="lazy" /></a>
+              <div className="p-4">
+                <h4 className="font-semibold mb-2">Phụ kiện &amp; thay thế</h4>
+                <p className="text-sm text-gray-600 mb-4">Đa dạng phụ kiện phục vụ thu hoạch và bảo trì thiết bị.</p>
+                <div className="flex gap-2">
+                  <Link href="/product"><a className="flex-1 text-center bg-green-600 text-white px-3 py-2 rounded">Chi tiết</a></Link>
+                  <Link href="/contact"><a className="flex-1 text-center border border-gray-300 px-3 py-2 rounded">Báo giá</a></Link>
                 </div>
               </div>
             </article>
           </div>
         </section>
+
+        {/* Video teaser */}
+        <section className="mt-10 bg-white p-6 rounded-lg shadow">
+          <div className="md:flex md:items-center md:gap-8">
+            <div className="md:flex-1">
+              <h3 className="text-xl font-semibold mb-2">Video quy trình sản xuất</h3>
+              <p className="text-sm text-gray-600 mb-4">Xem nhanh quy trình sản xuất và khâu kiểm định chất lượng sản phẩm tại nhà máy.</p>
+            </div>
+            <div className="md:w-96">
+              <div className="video-block not-playing" data-video-id="NNivheW6Qiw" data-youtube data-poster-custom="/images/page/abou/dongGoi.jpg">
+                <div className="video-inner">
+                  <div className="yt-brand-cover" aria-hidden="true"></div>
+                  <img className="video-poster" loading="lazy" alt="Poster" />
+                  <button className="play-btn" aria-label="Play video"></button>
+                  <button className="fs-btn" aria-label="Toàn màn hình" title="Toàn màn hình" style={{display:'none'}}>⤢</button>
+                  <iframe title="Video quy trình" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowFullScreen loading="lazy"></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="mt-10 py-8 px-6 rounded-lg bg-green-600 text-white text-center">
+          <h3 className="text-2xl font-semibold mb-3">Cần tư vấn chọn sản phẩm?</h3>
+          <p className="mb-4">Gọi ngay để được tư vấn kỹ thuật và nhận báo giá nhanh chóng.</p>
+          <a href="/contact" className="inline-block bg-white text-green-700 px-6 py-3 rounded-lg font-semibold">Liên hệ</a>
+        </section>
+
       </main>
 
       <Footer />
