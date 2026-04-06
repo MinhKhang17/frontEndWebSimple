@@ -1,0 +1,37 @@
+import React from 'react'
+
+export default function Footer() {
+  const year = new Date().getFullYear();
+  return (
+    <footer className="bg-gray-800 text-gray-200 mt-12">
+      <div className="max-w-6xl mx-auto px-4 py-6 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div>
+          <h6 className="font-semibold mb-2">Phong Hòa Phát</h6>
+          <p className="text-sm text-gray-400">Chuyên cung cấp vật tư ngành cao su chất lượng cao, uy tín, đảm bảo.</p>
+          <p className="text-sm mt-4">© {year} Phong Hòa Phát. All rights reserved.</p>
+        </div>
+        
+        <div>
+          <h6 className="font-semibold mb-2">Liên hệ</h6>
+          <div className="text-sm space-y-2">
+            <p>Hotline: <a href="tel:0908093598" className="text-green-300 hover:text-green-200">0908093598</a></p>
+            <p>Email: <a href="mailto:thanhphong7474@gmail.com" className="text-green-300 hover:text-green-200">thanhphong7474@gmail.com</a></p>
+          </div>
+        </div>
+
+        <div>
+          <h6 className="font-semibold mb-2">Địa chỉ</h6>
+          <address className="text-sm not-italic text-gray-300">Nhà 12, Đường 15, Khu Dân Cư Hiệp Thành 3, THủ Dầu Một, Bình Dương</address>
+        </div>
+
+        <div>
+          <h6 className="font-semibold mb-2">Giờ làm việc</h6>
+          <div className="text-sm space-y-1 text-gray-300">
+            <p>Thứ 2 - Thứ 6: 8:00 - 22:00</p>
+            <p>Thứ 7 - CN: 8:00 - 17:00</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  )
+}
