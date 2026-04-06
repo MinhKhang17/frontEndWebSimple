@@ -121,7 +121,6 @@ export default function About() {
                 <div className="video-block not-playing" data-video-id="NNivheW6Qiw" data-youtube data-poster-custom="/images/page/abou/dongGoi.jpg">
                   <div className="video-inner">
                     <div className="yt-brand-cover" aria-hidden="true"></div>
-                    <img className="video-poster" loading="lazy" alt="Poster" />
                     <button className="play-btn" aria-label="Play video ngắn"></button>
                     <button className="fs-btn" aria-label="Toàn màn hình" title="Toàn màn hình" style={{display:'none'}}>⤢</button>
                     <iframe src="" title="Video quy trình sản xuất" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowFullScreen></iframe>
@@ -141,7 +140,6 @@ export default function About() {
                   <div className="video-block not-playing" data-video-id="9QxWV1E77is" data-youtube data-poster-custom="/images/page/abou/may/mayEpChen.jpg">
                     <div className="video-inner">
                       <div className="yt-brand-cover" aria-hidden="true"></div>
-                      <img className="video-poster" loading="lazy" alt="Poster" />
                       <button className="play-btn" aria-label="Play"></button>
                       <button className="fs-btn" aria-label="Toàn màn hình" title="Toàn màn hình" style={{display:'none'}}>⤢</button>
                       <iframe src="" title="Máy ép chén" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowFullScreen></iframe>
@@ -155,7 +153,6 @@ export default function About() {
                   <div className="video-block not-playing" data-video-id="9Hae-M9pJZE" data-youtube data-poster-custom="/images/page/abou/may/mayDap.jpg">
                     <div className="video-inner">
                       <div className="yt-brand-cover" aria-hidden="true"></div>
-                      <img className="video-poster" loading="lazy" alt="Poster" />
                       <button className="play-btn" aria-label="Play"></button>
                       <button className="fs-btn" aria-label="Toàn màn hình" title="Toàn màn hình" style={{display:'none'}}>⤢</button>
                       <iframe src="" title="Máy dập" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowFullScreen></iframe>
@@ -167,9 +164,8 @@ export default function About() {
                 <div>
                   <h4 className="font-semibold mb-2">Máy cuộn cao su</h4>
                   <div className="video-block not-playing" data-video-id="rAyHbNkHD7I" data-youtube data-poster-custom="/images/page/abou/may/mayCuon.jpg">
-                    <div className="video-inner">
+                      <div className="video-inner">
                       <div className="yt-brand-cover" aria-hidden="true"></div>
-                      <img className="video-poster" loading="lazy" alt="Poster" />
                       <button className="play-btn" aria-label="Play"></button>
                       <button className="fs-btn" aria-label="Toàn màn hình" title="Toàn màn hình" style={{display:'none'}}>⤢</button>
                       <iframe src="" title="Máy cuộn" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowFullScreen></iframe>
@@ -181,9 +177,8 @@ export default function About() {
                 <div>
                   <h4 className="font-semibold mb-2">Sản xuất &amp; đóng gói</h4>
                   <div className="video-block not-playing" data-video-id="8OxbEvEaxHM" data-youtube data-poster-custom="/images/page/abou/may/dongGoi.jpg">
-                    <div className="video-inner">
+                      <div className="video-inner">
                       <div className="yt-brand-cover" aria-hidden="true"></div>
-                      <img className="video-poster" loading="lazy" alt="Poster" />
                       <button className="play-btn" aria-label="Play"></button>
                       <button className="fs-btn" aria-label="Toàn màn hình" title="Toàn màn hình" style={{display:'none'}}>⤢</button>
                       <iframe src="" title="Đóng gói" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowFullScreen></iframe>

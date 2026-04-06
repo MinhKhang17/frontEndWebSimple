@@ -44,9 +44,9 @@ const puppeteer = require('puppeteer');
     await delay(300);
     const vb = await page.$('.video-block');
     if (vb) {
-      const poster = await vb.$('.video-poster');
-      if (poster) {
-        await poster.click();
+      const playBtn = await vb.$('.play-btn');
+      if (playBtn) {
+        await playBtn.click();
         await delay(1000);
         results.videoPlaying = await page.evaluate(() => {
           const b = document.querySelector('.video-block');

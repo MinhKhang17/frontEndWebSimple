@@ -28,18 +28,10 @@ export default function VideoInitializer() {
         const iframe = container.querySelector('iframe');
         // prefer lazy loading for iframes to reduce initial payload
         if (iframe) iframe.setAttribute('loading', 'lazy');
-        const posterImg = container.querySelector('.video-poster');
         const fsBtn = container.querySelector('.fs-btn');
         const videoInner = container.querySelector('.video-inner');
         const videoId = container.getAttribute('data-video-id');
         const isYoutube = container.hasAttribute('data-youtube');
-
-        const customPoster = container.getAttribute('data-poster-custom');
-        if (customPoster && posterImg) {
-          posterImg.src = customPoster;
-        } else if (isYoutube && videoId && posterImg?.hasAttribute('data-poster-yt')) {
-          posterImg.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-        }
 
         if (fsBtn) fsBtn.style.display = 'none';
 
@@ -53,8 +45,7 @@ export default function VideoInitializer() {
           setTimeout(() => container.scrollIntoView({ behavior: 'smooth', block: 'center' }), 120);
         };
 
-        const posterClick = (e) => { handlePlay(); };
-        const playBtnClick = (e) => { handlePlay(); };
+        const playBtnClick = () => { handlePlay(); };
         const containerClick = (e) => { if (e.target === fsBtn || e.target.closest('.fs-btn')) return; if (container.classList.contains('not-playing')) handlePlay(); };
         const fsClick = (e) => {
           e.stopPropagation();
@@ -70,26 +61,14 @@ export default function VideoInitializer() {
         };
         const keyDown = (ev) => { if ((ev.key === 'Enter' || ev.key === ' ') && playBtn) { ev.preventDefault(); playBtn.click(); } };
 
-        posterImg?.addEventListener('click', posterClick);
         playBtn?.addEventListener('click', playBtnClick);
         container.addEventListener('click', containerClick);
         fsBtn?.addEventListener('click', fsClick);
         if (playBtn) { playBtn.setAttribute('role','button'); playBtn.tabIndex = 0; playBtn.addEventListener('keydown', keyDown); }
 
-        attached.push({ container, posterImg, playBtn, fsBtn, containerClick, posterClick, playBtnClick, fsClick, keyDown });
-      });
-    }
-
-    // expose for legacy callers
-    window.initVideos = initVideos;
-
-    // initialize now
-    initVideos();
-
-    return () => {
+        attached.push({ container, playBtn, fsBtn, containerClick, playBtnClick, fsClick, keyDown });
       attached.forEach(item => {
-        const { container, posterImg, playBtn, fsBtn, containerClick, posterClick, playBtnClick, fsClick, keyDown } = item;
-        posterImg?.removeEventListener('click', posterClick);
+        const { container, playBtn, fsBtn, containerClick, playBtnClick, fsClick, keyDown } = item;
         playBtn?.removeEventListener('click', playBtnClick);
         container?.removeEventListener('click', containerClick);
         fsBtn?.removeEventListener('click', fsClick);

@@ -104,7 +104,6 @@ export default function Home() {
               <div className="video-block not-playing" data-video-id="NNivheW6Qiw" data-youtube data-poster-custom="/images/page/abou/dongGoi.jpg">
                 <div className="video-inner">
                   <div className="yt-brand-cover" aria-hidden="true"></div>
-                  <img className="video-poster" loading="lazy" alt="Poster" />
                   <button className="play-btn" aria-label="Play video"></button>
                   <button className="fs-btn" aria-label="Toàn màn hình" title="Toàn màn hình" style={{display:'none'}}>⤢</button>
                   <iframe title="Video quy trình" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowFullScreen loading="lazy"></iframe>
