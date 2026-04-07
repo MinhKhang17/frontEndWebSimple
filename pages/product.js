@@ -49,8 +49,8 @@ export default function Product() {
         gallery = Array.from(document.querySelectorAll('img[data-lightbox]')).map(n => n.dataset.lightbox || n.src);
         currentIdx = gallery.indexOf(src);
         if (currentIdx === -1) currentIdx = 0;
-      showAt(currentIdx);
-    }
+        showAt(currentIdx);
+      }
 
     function closeLightbox() {
       if (!lightbox || !lightboxImg) return;
