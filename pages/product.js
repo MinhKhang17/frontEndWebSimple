@@ -52,47 +52,49 @@ export default function Product() {
         showAt(currentIdx);
       }
 
-    function closeLightbox() {
-      if (!lightbox || !lightboxImg) return;
-      lightbox.classList.remove('active');
-      lightbox.setAttribute('aria-hidden','true');
-      document.body.style.overflow = '';
-      lightboxImg.src = '';
-      currentIdx = -1;
+
+      function closeLightbox() {
+        if (!lightbox || !lightboxImg) return;
+        lightbox.classList.remove('active');
+        lightbox.setAttribute('aria-hidden','true');
+        document.body.style.overflow = '';
+        lightboxImg.src = '';
+        currentIdx = -1;
+      }
+
+      function keyHandler(e) {
+        if (!lightbox || !lightbox.classList.contains('active')) return;
+        if (e.key === 'Escape') { closeLightbox(); return; }
+        if (e.key === 'ArrowLeft') { showAt(currentIdx - 1); return; }
+        if (e.key === 'ArrowRight') { showAt(currentIdx + 1); return; }
+      }
+
+      const thumbs = Array.from(document.querySelectorAll('img[data-lightbox]'));
+      thumbs.forEach((img, i) => {
+        img.setAttribute('tabindex', '0');
+        img.setAttribute('role', 'button');
+        img.setAttribute('aria-label', `Mở hình ${i + 1} / ${thumbs.length}: ${img.alt || ''}`);
+        img.setAttribute('loading', 'lazy');
+        const onClick = (e) => open(e);
+        const onKey = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(e); } };
+        img.addEventListener('click', onClick);
+        img.addEventListener('keydown', onKey);
+        thumbHandlers.push({ el: img, onClick, onKey });
+      });
+
+      closeBtn?.addEventListener('click', closeLightbox);
+      function handleLightboxClick(e) { if (e.target === lightbox) closeLightbox(); }
+      lightbox?.addEventListener('click', handleLightboxClick);
+      document.addEventListener('keydown', keyHandler);
+
+      return () => {
+        cards.forEach(c => c.removeEventListener('click', onCardClick));
+        thumbHandlers.forEach(h => { h.el.removeEventListener('click', h.onClick); h.el.removeEventListener('keydown', h.onKey); });
+        closeBtn?.removeEventListener('click', closeLightbox);
+        lightbox?.removeEventListener('click', handleLightboxClick);
+        document.removeEventListener('keydown', keyHandler);
+      };
     }
-
-    function keyHandler(e) {
-      if (!lightbox || !lightbox.classList.contains('active')) return;
-      if (e.key === 'Escape') { closeLightbox(); return; }
-      if (e.key === 'ArrowLeft') { showAt(currentIdx - 1); return; }
-      if (e.key === 'ArrowRight') { showAt(currentIdx + 1); return; }
-    }
-
-    const thumbs = Array.from(document.querySelectorAll('img[data-lightbox]'));
-    thumbs.forEach((img, i) => {
-      img.setAttribute('tabindex', '0');
-      img.setAttribute('role', 'button');
-      img.setAttribute('aria-label', `Mở hình ${i + 1} / ${thumbs.length}: ${img.alt || ''}`);
-      img.setAttribute('loading', 'lazy');
-      const onClick = (e) => open(e);
-      const onKey = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(e); } };
-      img.addEventListener('click', onClick);
-      img.addEventListener('keydown', onKey);
-      thumbHandlers.push({ el: img, onClick, onKey });
-    });
-
-    closeBtn?.addEventListener('click', closeLightbox);
-    function handleLightboxClick(e) { if (e.target === lightbox) closeLightbox(); }
-    lightbox?.addEventListener('click', handleLightboxClick);
-    document.addEventListener('keydown', keyHandler);
-
-    return () => {
-      cards.forEach(c => c.removeEventListener('click', onCardClick));
-      thumbHandlers.forEach(h => { h.el.removeEventListener('click', h.onClick); h.el.removeEventListener('keydown', h.onKey); });
-      closeBtn?.removeEventListener('click', closeLightbox);
-      lightbox?.removeEventListener('click', handleLightboxClick);
-      document.removeEventListener('keydown', keyHandler);
-    };
   }, []);
 
   return (
