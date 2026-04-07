@@ -7,81 +7,82 @@ import { useEffect } from 'react'
 export default function About() {
   useEffect(() => {
     // Re-run legacy initializers on client navigation
-    try { if (window.initializeHeader) window.initializeHeader(); } catch(e){}
-    try { if (window.initVideos) window.initVideos(); } catch(e){}
+    if (typeof window !== 'undefined') {
+      try { if (window.initializeHeader) window.initializeHeader(); } catch(e){}
 
-    // Lightbox for images with data-lightbox (make thumbnails keyboard accessible)
-    const lightbox = document.getElementById('img-lightbox');
-    const lightboxImg = lightbox?.querySelector('img');
-    const closeBtn = lightbox?.querySelector('.close-btn');
-    let gallery = [];
-    let currentIdx = -1;
-    const thumbHandlers = [];
+      // Lightbox for images with data-lightbox (make thumbnails keyboard accessible)
+      const lightbox = document.getElementById('img-lightbox');
+      const lightboxImg = lightbox?.querySelector('img');
+      const closeBtn = lightbox?.querySelector('.close-btn');
+      let gallery = [];
+      let currentIdx = -1;
+      const thumbHandlers = [];
 
-    function showAt(index) {
-      if (!lightbox || !lightboxImg) return;
-      if (!gallery || gallery.length === 0) return;
-      if (index < 0) index = gallery.length - 1;
-      if (index >= gallery.length) index = 0;
-      currentIdx = index;
-      const src = gallery[index];
-      lightboxImg.src = src;
-      const thumb = document.querySelectorAll('img[data-lightbox]')[index];
-      lightboxImg.alt = (thumb && thumb.alt) ? thumb.alt : '';
-      lightbox.classList.add('active');
-      lightbox.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-      closeBtn?.focus();
+      function showAt(index) {
+        if (!lightbox || !lightboxImg) return;
+        if (!gallery || gallery.length === 0) return;
+        if (index < 0) index = gallery.length - 1;
+        if (index >= gallery.length) index = 0;
+        currentIdx = index;
+        const src = gallery[index];
+        lightboxImg.src = src;
+        const thumb = document.querySelectorAll('img[data-lightbox]')[index];
+        lightboxImg.alt = (thumb && thumb.alt) ? thumb.alt : '';
+        lightbox.classList.add('active');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        closeBtn?.focus();
+      }
+
+      function open(e) {
+        const src = e.currentTarget.dataset.lightbox || e.currentTarget.src;
+        gallery = Array.from(document.querySelectorAll('img[data-lightbox]')).map(n => n.dataset.lightbox || n.src);
+        currentIdx = gallery.indexOf(src);
+        if (currentIdx === -1) currentIdx = 0;
+        showAt(currentIdx);
+      }
+
+      function close() {
+        if (!lightbox || !lightboxImg) return;
+        lightbox.classList.remove('active');
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        lightboxImg.src = '';
+        currentIdx = -1;
+      }
+
+      function keyHandler(e) {
+        if (!lightbox || !lightbox.classList.contains('active')) return;
+        if (e.key === 'Escape') { close(); return; }
+        if (e.key === 'ArrowLeft') { showAt(currentIdx - 1); return; }
+        if (e.key === 'ArrowRight') { showAt(currentIdx + 1); return; }
+      }
+
+      const imgs = Array.from(document.querySelectorAll('img[data-lightbox]'));
+      imgs.forEach((img, i) => {
+        img.setAttribute('tabindex', '0');
+        img.setAttribute('role', 'button');
+        img.setAttribute('aria-label', `Mở hình ${i + 1} / ${imgs.length}: ${img.alt || ''}`);
+        img.setAttribute('loading', 'lazy');
+        const onClick = (e) => open(e);
+        const onKey = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(e); } };
+        img.addEventListener('click', onClick);
+        img.addEventListener('keydown', onKey);
+        thumbHandlers.push({ el: img, onClick, onKey });
+      });
+
+      closeBtn?.addEventListener('click', close);
+      function handleLightboxClick(e) { if (e.target === lightbox) close(); }
+      lightbox?.addEventListener('click', handleLightboxClick);
+      document.addEventListener('keydown', keyHandler);
+
+      return () => {
+        thumbHandlers.forEach(h => { h.el.removeEventListener('click', h.onClick); h.el.removeEventListener('keydown', h.onKey); });
+        closeBtn?.removeEventListener('click', close);
+        lightbox?.removeEventListener('click', handleLightboxClick);
+        document.removeEventListener('keydown', keyHandler);
+      };
     }
-
-    function open(e) {
-      const src = e.currentTarget.dataset.lightbox || e.currentTarget.src;
-      gallery = Array.from(document.querySelectorAll('img[data-lightbox]')).map(n => n.dataset.lightbox || n.src);
-      currentIdx = gallery.indexOf(src);
-      if (currentIdx === -1) currentIdx = 0;
-      showAt(currentIdx);
-    }
-
-    function close() {
-      if (!lightbox || !lightboxImg) return;
-      lightbox.classList.remove('active');
-      lightbox.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-      lightboxImg.src = '';
-      currentIdx = -1;
-    }
-
-    function keyHandler(e) {
-      if (!lightbox || !lightbox.classList.contains('active')) return;
-      if (e.key === 'Escape') { close(); return; }
-      if (e.key === 'ArrowLeft') { showAt(currentIdx - 1); return; }
-      if (e.key === 'ArrowRight') { showAt(currentIdx + 1); return; }
-    }
-
-    const imgs = Array.from(document.querySelectorAll('img[data-lightbox]'));
-    imgs.forEach((img, i) => {
-      img.setAttribute('tabindex', '0');
-      img.setAttribute('role', 'button');
-      img.setAttribute('aria-label', `Mở hình ${i + 1} / ${imgs.length}: ${img.alt || ''}`);
-      img.setAttribute('loading', 'lazy');
-      const onClick = (e) => open(e);
-      const onKey = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(e); } };
-      img.addEventListener('click', onClick);
-      img.addEventListener('keydown', onKey);
-      thumbHandlers.push({ el: img, onClick, onKey });
-    });
-
-    closeBtn?.addEventListener('click', close);
-    function handleLightboxClick(e) { if (e.target === lightbox) close(); }
-    lightbox?.addEventListener('click', handleLightboxClick);
-    document.addEventListener('keydown', keyHandler);
-
-    return () => {
-      thumbHandlers.forEach(h => { h.el.removeEventListener('click', h.onClick); h.el.removeEventListener('keydown', h.onKey); });
-      closeBtn?.removeEventListener('click', close);
-      lightbox?.removeEventListener('click', handleLightboxClick);
-      document.removeEventListener('keydown', keyHandler);
-    };
   }, []);
 
   return (
