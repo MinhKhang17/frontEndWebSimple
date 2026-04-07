@@ -124,6 +124,9 @@ export default function ProductDetail() {
       return;
     }
     setProduct(p);
+
+    if (typeof window === 'undefined') return;
+
     // small page transition effect
     setTimeout(() => {
       const el = document.querySelector('.page-transition');
