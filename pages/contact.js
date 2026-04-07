@@ -7,7 +7,9 @@ export default function Contact() {
   const [toast, setToast] = useState('')
 
   useEffect(() => {
-    try { if (window.initializeHeader) window.initializeHeader(); } catch(e){}
+    if (typeof window !== 'undefined' && window.initializeHeader) {
+      try { window.initializeHeader(); } catch(e){}
+    }
     if (!toast) return;
     const t = setTimeout(() => setToast(''), 1600);
     return () => clearTimeout(t);

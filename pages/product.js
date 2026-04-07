@@ -6,48 +6,49 @@ import { useEffect } from 'react'
 export default function Product() {
   useEffect(() => {
     // Re-run legacy init if present
-    try { if (window.initializeHeader) window.initializeHeader(); } catch(e){}
+    if (typeof window !== 'undefined') {
+      try { if (window.initializeHeader) window.initializeHeader(); } catch(e){}
 
-    // Card click behavior
-    function onCardClick(e) {
-      if (e.target.closest('a') || e.target.closest('button') || e.target.closest('img[data-lightbox]')) return;
-      const id = this.dataset.product;
-      if (id) window.location.href = `/product-detail?product=${id}`;
-    }
+      // Card click behavior
+      function onCardClick(e) {
+        if (e.target.closest('a') || e.target.closest('button') || e.target.closest('img[data-lightbox]')) return;
+        const id = this.dataset.product;
+        if (id) window.location.href = `/product-detail?product=${id}`;
+      }
 
-    const cards = Array.from(document.querySelectorAll('.product-card'));
-    cards.forEach(c => c.addEventListener('click', onCardClick));
+      const cards = Array.from(document.querySelectorAll('.product-card'));
+      cards.forEach(c => c.addEventListener('click', onCardClick));
 
-    // Lightbox setup with keyboard navigation and lazy thumbnails
-    const lightbox = document.getElementById('img-lightbox');
-    const lightboxImg = lightbox?.querySelector('img');
-    const closeBtn = lightbox?.querySelector('.close-btn');
-    let gallery = [];
-    let currentIdx = -1;
-    const thumbHandlers = [];
+      // Lightbox setup with keyboard navigation and lazy thumbnails
+      const lightbox = document.getElementById('img-lightbox');
+      const lightboxImg = lightbox?.querySelector('img');
+      const closeBtn = lightbox?.querySelector('.close-btn');
+      let gallery = [];
+      let currentIdx = -1;
+      const thumbHandlers = [];
 
-    function showAt(index) {
-      if (!lightbox || !lightboxImg) return;
-      if (!gallery || gallery.length === 0) return;
-      if (index < 0) index = gallery.length - 1;
-      if (index >= gallery.length) index = 0;
-      currentIdx = index;
-      const src = gallery[index];
-      lightboxImg.src = src;
-      const thumb = document.querySelectorAll('img[data-lightbox]')[index];
-      lightboxImg.alt = (thumb && thumb.alt) ? thumb.alt : '';
-      lightbox.classList.add('active');
-      lightbox.setAttribute('aria-hidden','false');
-      document.body.style.overflow = 'hidden';
-      closeBtn?.focus();
-    }
+      function showAt(index) {
+        if (!lightbox || !lightboxImg) return;
+        if (!gallery || gallery.length === 0) return;
+        if (index < 0) index = gallery.length - 1;
+        if (index >= gallery.length) index = 0;
+        currentIdx = index;
+        const src = gallery[index];
+        lightboxImg.src = src;
+        const thumb = document.querySelectorAll('img[data-lightbox]')[index];
+        lightboxImg.alt = (thumb && thumb.alt) ? thumb.alt : '';
+        lightbox.classList.add('active');
+        lightbox.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+        closeBtn?.focus();
+      }
 
-    function open(e) {
-      e.stopPropagation();
-      const src = e.currentTarget.dataset.lightbox || e.currentTarget.src;
-      gallery = Array.from(document.querySelectorAll('img[data-lightbox]')).map(n => n.dataset.lightbox || n.src);
-      currentIdx = gallery.indexOf(src);
-      if (currentIdx === -1) currentIdx = 0;
+      function open(e) {
+        e.stopPropagation();
+        const src = e.currentTarget.dataset.lightbox || e.currentTarget.src;
+        gallery = Array.from(document.querySelectorAll('img[data-lightbox]')).map(n => n.dataset.lightbox || n.src);
+        currentIdx = gallery.indexOf(src);
+        if (currentIdx === -1) currentIdx = 0;
       showAt(currentIdx);
     }
 
