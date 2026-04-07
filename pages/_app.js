@@ -123,7 +123,6 @@ export default function MyApp({ Component, pageProps }) {
       </div>
 
       <a href="#main-content" className="skip-link">Bỏ qua tới nội dung</a>
-      <VideoInitializer />
       <Component {...pageProps} />
     </>
   )
