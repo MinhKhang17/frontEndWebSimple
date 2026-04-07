@@ -69,11 +69,30 @@ export default function Header() {
                   <span>Danh mục sản phẩm</span>
                   <svg className={`w-4 h-4 transition-transform ${catOpen ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M5 7l5 5 5-5H5z"/></svg>
                 </button>
-                <div id="catMenu" className={`${catOpen ? 'block' : 'hidden'} absolute left-0 mt-2 w-64 bg-white border rounded-lg shadow-lg z-40`} role="menu" aria-hidden={!catOpen}>
-                  <div className="p-4 space-y-2">
-                    <a href="/product-detail?product=chenMu" className="block text-sm py-1.5 hover:text-teal-600 rounded transition-colors">Chén cao su hứng mủ</a>
-                    <a href="/product-detail?product=mangChanMua" className="block text-sm py-1.5 hover:text-teal-600 rounded transition-colors">Máng chắn mưa</a>
-                    <a href="/product" className="block text-sm py-1.5 hover:text-teal-600 rounded transition-colors font-medium">Tất cả sản phẩm</a>
+                <div id="catMenu" className={`${catOpen ? 'block' : 'hidden'} absolute left-0 mt-2 w-72 bg-white border rounded-lg shadow-lg z-40`} role="menu" aria-hidden={!catOpen}>
+                  <div className="p-4 space-y-4">
+                    {/* Sản phẩm của xưởng */}
+                    <div>
+                      <h4 className="text-xs font-bold text-gray-700 uppercase mb-2">Sản phẩm của xưởng</h4>
+                      <div className="space-y-1 pl-2 border-l-2 border-teal-600">
+                        <a href="/product-detail?product=chenMu" className="block text-sm py-1 hover:text-teal-600 rounded transition-colors">• Chén cao su hứng mủ</a>
+                        <a href="/product-detail?product=mangChanMua" className="block text-sm py-1 hover:text-teal-600 rounded transition-colors">• Máng chắn mưa PE</a>
+                      </div>
+                    </div>
+
+                    {/* Sản phẩm thương mại */}
+                    <div>
+                      <h4 className="text-xs font-bold text-gray-700 uppercase mb-2">Sản phẩm thương mại</h4>
+                      <div className="space-y-1 pl-2 border-l-2 border-gray-400">
+                        <a href="/product-detail?product=mangDanMu" className="block text-sm py-1 hover:text-teal-600 rounded transition-colors">• Máng dẫn mủ</a>
+                        <a href="/product-detail?product=keo" className="block text-sm py-1 hover:text-teal-600 rounded transition-colors">• Keo</a>
+                        <a href="/product-detail?product=kieng" className="block text-sm py-1 hover:text-teal-600 rounded transition-colors">• Kiềng</a>
+                        <a href="/product-detail?product=dayNilon" className="block text-sm py-1 hover:text-teal-600 rounded transition-colors">• Dây nilon cột</a>
+                        <a href="/product-detail?product=khac" className="block text-sm py-1 hover:text-teal-600 rounded transition-colors">• Khác (Phân bón, dao cạo mủ, kim bấm)</a>
+                      </div>
+                    </div>
+
+                    <a href="/product" className="block text-sm py-2 hover:text-teal-600 rounded transition-colors font-medium border-t pt-3">→ Tất cả sản phẩm</a>
                   </div>
                 </div>
               </div>

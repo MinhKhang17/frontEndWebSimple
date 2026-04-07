@@ -25,8 +25,15 @@ export default function Pricing() {
             </thead>
 
             <tbody>
+              <tr className="border-b bg-blue-50"><td className="p-3 font-semibold text-blue-900">SẢN PHẨM CỦA XƯỞNG</td><td colSpan="2" className="p-3"></td></tr>
               <tr className="border-b"><td className="p-3">Chén hứng mủ cao su</td><td className="p-3">Cái</td><td className="p-3 text-red-600 font-medium">Liên hệ</td></tr>
               <tr className="border-b"><td className="p-3">Máng chắn mưa cây cao su</td><td className="p-3">Kg</td><td className="p-3 text-red-600 font-medium">Liên hệ</td></tr>
+              
+              <tr className="border-b bg-gray-50"><td className="p-3 font-semibold text-gray-900">SẢN PHẨM THƯƠNG MẠI</td><td colSpan="2" className="p-3"></td></tr>
+              <tr className="border-b"><td className="p-3">Máng dẫn mủ</td><td className="p-3">Bộ</td><td className="p-3 text-red-600 font-medium">Liên hệ</td></tr>
+              <tr className="border-b"><td className="p-3">Keo</td><td className="p-3">Lọ / Tuýp</td><td className="p-3 text-red-600 font-medium">Liên hệ</td></tr>
+              <tr className="border-b"><td className="p-3">Kiềng</td><td className="p-3">Cái</td><td className="p-3 text-red-600 font-medium">Liên hệ</td></tr>
+              <tr className="border-b"><td className="p-3">Dây nilon cột</td><td className="p-3">Mét / Cuộn</td><td className="p-3 text-red-600 font-medium">Liên hệ</td></tr>
             </tbody>
           </table>
         </div>

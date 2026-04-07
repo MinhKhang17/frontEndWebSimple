@@ -123,6 +123,7 @@ export default function MyApp({ Component, pageProps }) {
         <img src={undefined} alt="" />
       </div>
 
+      <a href="#main-content" className="skip-link">Bỏ qua tới nội dung</a>
       <VideoInitializer />
       <Component {...pageProps} />
     </>

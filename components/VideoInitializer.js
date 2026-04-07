@@ -67,6 +67,17 @@ export default function VideoInitializer() {
         if (playBtn) { playBtn.setAttribute('role','button'); playBtn.tabIndex = 0; playBtn.addEventListener('keydown', keyDown); }
 
         attached.push({ container, playBtn, fsBtn, containerClick, playBtnClick, fsClick, keyDown });
+      });
+
+      // expose for manual re-initialization if needed
+      if (typeof window !== 'undefined') window.initVideos = initVideos;
+    }
+
+    // run once on mount
+    setTimeout(initVideos, 0);
+
+    // cleanup
+    return () => {
       attached.forEach(item => {
         const { container, playBtn, fsBtn, containerClick, playBtnClick, fsClick, keyDown } = item;
         playBtn?.removeEventListener('click', playBtnClick);
@@ -75,7 +86,7 @@ export default function VideoInitializer() {
         if (playBtn) playBtn.removeEventListener('keydown', keyDown);
         if (container) delete container.dataset.initialized;
       });
-      if (window.initVideos && window.initVideos === initVideos) delete window.initVideos;
+      if (typeof window !== 'undefined' && window.initVideos && window.initVideos === initVideos) delete window.initVideos;
     };
   }, []);
 
