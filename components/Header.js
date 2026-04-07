@@ -6,6 +6,8 @@ export default function Header() {
   const headerRef = useRef(null)
 
   useEffect(() => {
+    if (typeof window === 'undefined') return
+
     function onDocClick(e) {
       if (!headerRef.current) return
       if (!headerRef.current.contains(e.target)) {
@@ -37,6 +39,7 @@ export default function Header() {
 
   // lock scroll when mobile menu open
   useEffect(() => {
+    if (typeof window === 'undefined') return
     if (mobileOpen) document.body.style.overflow = 'hidden'
     else document.body.style.overflow = ''
   }, [mobileOpen])
