@@ -3,7 +3,6 @@ import Script from 'next/script'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import '../styles/globals.css'
-import VideoInitializer from '../components/VideoInitializer'
 
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
