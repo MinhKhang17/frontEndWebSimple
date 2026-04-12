@@ -3,13 +3,55 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Link from 'next/link'
 import VideoBlock from '../components/VideoBlock'
+import { generateOGTags, generateStructuredData, getCanonicalUrl } from '../lib/seo'
 
 export default function Home() {
+  const title = 'Phong Hòa Phát — Vật tư ngành cao su | Chén hứng mủ, máng chắn mưa'
+  const description = 'Phong Hòa Phát cung cấp vật tư khai thác mủ cao su: chén hứng mủ, máng chắn mưa, phụ kiện chuẩn chất lượng. Giao hàng nhanh, hỗ trợ kỹ thuật.'
+  const canonicalUrl = getCanonicalUrl('/')
+  
+  const ogTags = generateOGTags({
+    title,
+    description,
+    url: canonicalUrl,
+  })
+  
+  const organizationSchema = generateStructuredData('Organization', {
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: '+84-908-093-598',
+      contactType: 'Sales',
+      name: 'Phong Hòa Phát',
+    }
+  })
+
+  const localBusinessSchema = generateStructuredData('LocalBusiness', {
+    telephone: '+84-908-093-598',
+    priceRange: '$$',
+  })
+
   return (
     <>
       <Head>
-        <title>Phong Hòa Phát — Vật tư ngành cao su</title>
-        <meta name="description" content="Phong Hòa Phát cung cấp vật tư khai thác mủ: chén, máng chắn mưa, phụ kiện chuẩn chất lượng." />
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta name="keywords" content="vật tư cao su, chén hứng mủ, máng chắn mưa, phụ kiện cao su, khai thác mủ, tiêu chuẩn ISO" />
+        <link rel="canonical" href={canonicalUrl} />
+        
+        {/* Open Graph */}
+        {Object.entries(ogTags).map(([key, value]) => (
+          <meta key={key} property={key} content={value} />
+        ))}
+        
+        {/* Structured Data */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(organizationSchema)}} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(localBusinessSchema)}} />
+        
+        {/* Additional SEO */}
+        <meta name="author" content="Phong Hòa Phát" />
+        <meta name="language" content="Vietnamese" />
+        <meta name="revisit-after" content="7 days" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
       </Head>
 
       <Header />

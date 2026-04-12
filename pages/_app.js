@@ -4,6 +4,16 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import '../styles/globals.css'
 
+// Ensure fonts are properly loaded to prevent FOUC
+if (typeof window !== 'undefined') {
+  // Add font load event listener
+  if ('fonts' in document) {
+    document.fonts.ready.then(() => {
+      document.documentElement.style.fontFamily = "'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+    })
+  }
+}
+
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://phonghoaphat.com';
