@@ -4,16 +4,6 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import '../styles/globals.css'
 
-// Ensure fonts are properly loaded to prevent FOUC
-if (typeof window !== 'undefined') {
-  // Add font load event listener
-  if ('fonts' in document) {
-    document.fonts.ready.then(() => {
-      document.documentElement.style.fontFamily = "'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-    })
-  }
-}
-
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://phonghoaphat.com';
@@ -23,20 +13,16 @@ export default function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     function handleRouteChange() {
-      // Re-run small legacy lifecycle hooks if present
       try { if (window.initializeHeader) window.initializeHeader(); } catch(e) {}
       try { if (window.initVideos) window.initVideos(); } catch(e) {}
     }
 
-    // Run on first load
     handleRouteChange();
-
     router.events.on('routeChangeComplete', handleRouteChange);
     return () => router.events.off('routeChangeComplete', handleRouteChange);
   }, [router.events]);
 
   useEffect(() => {
-    // Create or reuse nav overlay (page transition)
     let navOverlay = document.getElementById('navOverlay');
     if (!navOverlay) {
       navOverlay = document.createElement('div');
@@ -72,7 +58,6 @@ export default function MyApp({ Component, pageProps }) {
     router.events.on('routeChangeComplete', hideOverlay);
     router.events.on('routeChangeError', hideOverlay);
 
-    // Prefetch on hover/touch for internal links (lightweight)
     const prefetched = new Set();
     function maybePrefetchHref(href) {
       try {
@@ -88,7 +73,7 @@ export default function MyApp({ Component, pageProps }) {
     document.addEventListener('mouseover', onHover, { passive: true });
     document.addEventListener('touchstart', onTouch, { passive: true });
 
-    // pageshow handler (bfcache): refresh font links if restored from bfcache
+    window.addEventListener('pageshow', onPageShow);
     function onPageShow(e) {
       if (e.persisted) {
         document.querySelectorAll('link[href*="fonts.googleapis"]').forEach(link => {
@@ -96,7 +81,6 @@ export default function MyApp({ Component, pageProps }) {
         });
       }
     }
-    window.addEventListener('pageshow', onPageShow);
 
     return () => {
       router.events.off('routeChangeStart', showOverlay);
@@ -112,6 +96,26 @@ export default function MyApp({ Component, pageProps }) {
     <>
       <Head>
         <meta charSet="utf-8" />
+
+        {/* ✅ FIX 1: Preconnect sớm nhất để browser mở kết nối đến Google Fonts ngay */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+
+        {/* ✅ FIX 2: Preload font stylesheet — load song song với HTML parsing */}
+        <link
+          rel="preload"
+          as="style"
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+          onLoad="this.onload=null;this.rel='stylesheet'"
+        />
+        {/* Fallback cho trình duyệt không hỗ trợ preload */}
+        <noscript>
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+          />
+        </noscript>
+
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="Phong Hòa Phát - Vật tư & giải pháp khai thác mủ. Sản phẩm: chén cao su, máng chắn mưa và nhiều thiết bị khác." />
         <meta name="robots" content="index,follow" />
@@ -125,8 +129,18 @@ export default function MyApp({ Component, pageProps }) {
         <link rel="canonical" href={canonicalUrl} />
         <link rel="icon" href="/images/page/logo/favicon-96x96.png" />
       </Head>
-      <Script src="https://cdn.tailwindcss.com" strategy="beforeInteractive" />
-      {/* Global lightbox used by legacy scripts */}
+
+      {/*
+        ✅ FIX 3: Đổi strategy từ "beforeInteractive" → "lazyOnload"
+        - beforeInteractive: chặn toàn bộ render cho đến khi script CDN load xong → FOUC
+        - lazyOnload: load Tailwind sau khi trang đã render xong → không block
+        
+        ⚠️  LƯU Ý QUAN TRỌNG: Nếu dùng Tailwind CDN trong production, bạn nên
+        chuyển sang cài Tailwind qua npm + PostCSS để CSS được bundle tĩnh,
+        không phụ thuộc CDN ngoài và tránh hoàn toàn vấn đề này.
+      */}
+      <Script src="https://cdn.tailwindcss.com" strategy="lazyOnload" />
+
       <div id="img-lightbox" className="img-lightbox" role="dialog" aria-modal="true" aria-hidden="true">
         <button className="close-btn" aria-label="Đóng">X</button>
         <img src={undefined} alt="" />
